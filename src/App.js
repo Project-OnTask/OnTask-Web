@@ -12,7 +12,6 @@ const Signup = React.lazy(() => import('./views/Signup'));
 const Privacy = React.lazy(() => import('./views/PrivacyPolicy'));
 const ForgotPassword = React.lazy(() => import('./views/ForgotPassword/ForgotPassword'));
 const ResetPassword = React.lazy(() => import('./views/ForgotPassword/ResetPassword'));
-const Page404 = React.lazy(() => import('./views/Page404'));
 const Page500 = React.lazy(() => import('./views/Page500'));
 const Group = React.lazy(() => import('./views/Group'));
 
