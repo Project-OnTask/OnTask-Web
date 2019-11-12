@@ -11,6 +11,19 @@ const SubTasks = props => {
     const {values,handleChange,handleSubmit} = useForm(createSubtask)
     const [subtasks,setSubtasks] = useState([])
 
+    useEffect(
+      () => {
+        SENDER.get('/subtasks/task/'+props.taskId).then(
+          res => {
+            let i=0; 
+            setSubtasks(res.data)
+            i = res.data.filter( subtask => subtask.completed === true ).length
+            props.sendSubTaskStats(i,res.data.length)
+          }
+        ).catch(err => console.log(err))
+      },[props,trig]
+    )
+
     function createSubtask(){
       SENDER.post('/subtasks',{
         addedBy: localStorage.getItem('id'),
@@ -28,21 +41,9 @@ const SubTasks = props => {
       setTrig(!trig)
     }
 
-    useEffect(
-      () => {
-        SENDER.get('/subtasks/task/'+props.taskId).then(
-          res => {
-            let i=0; 
-            setSubtasks(res.data)
-            i = res.data.filter( subtask => subtask.completed === true ).length
-            props.sendSubTaskStats(i,res.data.length)
-          }
-        ).catch(err => console.log(err))
-      },[props,trig]
-    )
     return (
-        <Card>
-                <CardHeader>
+        <Card style={{border: 0}}>
+                <CardHeader style={{backgroundColor: "white"}}>
                   <Checklist size={20} />
                   <b>Subtasks</b>
                   <div className="card-header-actions">
@@ -71,7 +72,7 @@ const SubTasks = props => {
                         notifySubtaskStatusChange={getMarkedSubtaskChange}
                         name={subtask.name}
                       />
-                    }): <h6 style={{textAlign: "center",color: "gray",paddingTop: "2%"}}>Add subtasks to measure task completion status</h6>}
+                    }): <h6 style={{textAlign: "center",color: "gray",paddingTop: "4%"}}>Add subtasks to measure task completion status</h6>}
                   </ListGroup>
                 </CardBody>
               </Card>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardBody, CardHeader, ListGroupItem} from 'reactstrap'
+import {  CardHeader, ListGroupItem} from 'reactstrap'
 import MemberItem from '../../../components/GroupMemberItem'
 import SENDER from "../../../utils/SENDER";
 
@@ -23,11 +23,12 @@ const GroupMembers = props => {
     },[props.groupId])
 
     return (
-        <Card style={{ padding: 0,margin: 0, height: "84vh" }}>
-        <CardBody style={{ padding: 0 }}>
-          <CardHeader>
-            <b>Admins</b>
-          </CardHeader>
+      <>
+        {/* <Card style={{ padding: 0,margin: 0, height: "84vh" }}>
+    <CardBody style={{ padding: 0 }}>  */}
+    <div style={{height: "83vh",paddingBottom: 0,backgroundColor: "white",display: "flex",flexDirection: "column"}}>
+            <b style={{margin: "1% 1% 1% 3%"}}>Admins</b>
+         
           {admins.map(admin => {
             const lname = admin.lname ? admin.lname : "";
             return (
@@ -43,9 +44,7 @@ const GroupMembers = props => {
               />
             );
           })}
-          <CardHeader>
-            <b>Members</b>
-          </CardHeader>
+            <b  style={{margin: "1% 1% 1% 3%"}}>Members</b>
           {members.length > 0 ? (
            members.map(member => {
               const lname = member.lname ? member.lname : "";
@@ -63,14 +62,14 @@ const GroupMembers = props => {
               );
             })
           ) : (
-            <ListGroupItem>
-              <div className="text-center">
+              <div className="text-center" style={{padding: "3%"}}>
                 No members.Invite someone to join the group
               </div>
-            </ListGroupItem>
           )}
-        </CardBody>
-      </Card>
+    </div>
+      {/*   </CardBody>
+         </Card> */}
+         </>
     );
 };
 

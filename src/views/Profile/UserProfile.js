@@ -105,13 +105,13 @@ const UserProfile = props => {
                     }}
                   >
                     {typeof link.icon === "string" ? (
-                      <i className={link.icon} style={{ fontSize: "20px" }} />
+                      <i className={link.icon} style={{ fontSize: "20px",color: "gray" }} />
                     ) : (
                       link.icon
                     )}
 
                     
-                    {link.tag === "a" ? (<a href={userData[link.type]} target="_blank" style={{color: "black",margin: "0.5%", marginLeft: "1.5%"}}>
+                    {link.tag === "a" ? (<a href={userData[link.type]} rel="noopener noreferrer" target="_blank" style={{color: "black",margin: "0.5%", marginLeft: "1.5%"}}>
                       {userData[link.type]}
                     </a>) : <p style={{  margin: "0.5%", marginLeft: "1.5%" }}>
                       {userData[link.type]}
@@ -126,18 +126,19 @@ const UserProfile = props => {
       </Row>
       <Row style={{ marginTop: "1%" }}>
         <Col sm="12" md="12" xs="12" lg="12">
-          <Card>
+          <Card style={{border: "none"}}>
             <div
               style={{
                 display: "flex",
                 flexDirection: "row",
-                height: "8vh",
-                padding: "2%",
+                height: "4vh",
+                marginTop: "1%",
+                paddingBottom: "0.5%",
                 alignItems: "center",
               }}
             >
               <i
-                style={{ fontSize: 18, paddingRight: "2%" }}
+                style={{ fontSize: 18,color: "gray" }}
                 className="fa fa-graduation-cap"
               ></i>
               <h4>Education</h4>
@@ -160,6 +161,7 @@ const UserProfile = props => {
                   justifyContent: "center",
                   height: "5vh",
                   margin: "1%",
+                  marginLeft: "0%",
                   padding: "5%",
                   alignItems: "center",
                 }}
@@ -170,18 +172,20 @@ const UserProfile = props => {
           </Card>
         </Col>
         <Col sm="12" md="12" xs="12" lg="12">
-        <Card>
+        <Card style={{border: "none"}}>
             <div
               style={{
                 display: "flex",
                 flexDirection: "row",
-                height: "8vh",
+                height: "4vh",
                 padding: "2%",
+                paddingLeft: 0,
+                paddingBottom: "0.5%",
                 alignItems: "center",
               }}
             >
               <i
-                style={{ fontSize: 18, paddingRight: "2%" }}
+                style={{ fontSize: 18,paddingRight: "1%",color: "gray" }}
                 className="fa fa-briefcase"
               ></i>
               <h4>Work</h4>
@@ -206,6 +210,7 @@ const UserProfile = props => {
                   height: "5vh",
                   padding: "5%",
                   margin: "1%",
+                  marginLeft: 0,
                   alignItems: "center",
                 }}
               >

@@ -43,16 +43,16 @@ class GroupMemberItem extends Component {
           <img
             style={{ borderRadius: "50%" }}
             className="img-avatar"
-            width="35"
-            height="35"
+            width="30"
+            height="30"
             src={this.props.img}
             alt=""
           />
         ) : (
           <img
             className="img-avatar"
-            width="35"
-            height="35"
+            width="30"
+            height="30"
             src={
               "https://www.gravatar.com/avatar/" +
               this.props.emailHash +

@@ -30,17 +30,16 @@ const TaskActivity = props => {
    
     
     return (
-        <Card>
-              <CardHeader>
-                <b>Task Activity</b>
-                <div className="card-header-actions" />
-              </CardHeader>
+        <Card style={{border: "none"}}>
+
+                <b style={{paddingBottom: "3%"}}>Task Activity</b>
+
               <CardBody style={{ padding: 0 }}>
                 {taskActivities.map( taskActivity => {
                   return (
                     <TaskActivityItem 
                     key={taskActivity.id}
-                    description={taskActivity.description}
+                    description={taskActivity.description.split("in group")[0]}
                     createdAt={taskActivity.createdAt}
                   />
                   )
