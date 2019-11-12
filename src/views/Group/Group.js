@@ -1,16 +1,5 @@
 import React, { Component } from "react";
-import pusher from "../../utils/PusherObject";
-import GroupTasks from "./components/GroupTasks";
-import GroupActivityItem from "../../components/ActivityItem";
-import RequireAuth from "../../utils/PrivateRoute";
-import GroupHeader from "./components/GroupHeader";
-
-import SENDER from "../../utils/SENDER";
-
-import GroupMembers from "./components/GroupMembers";
-
 import {
-  Progress,
   Button,
   Card,
   CardBody,
@@ -18,7 +7,16 @@ import {
   Col,
   Row,
 } from "reactstrap";
-import NewNoticeForm from "../../components/NewNoticeForm";
+
+import pusher from "../../utils/PusherObject";
+import GroupTasks from "./components/GroupTasks";
+import GroupActivityItem from "../../components/ActivityItem";
+import RequireAuth from "../../utils/PrivateRoute";
+import ReactMarkdown from "react-markdown";
+import GroupHeader from "./components/GroupHeader";
+import SENDER from "../../utils/SENDER";
+import GroupMembers from "./components/GroupMembers";
+import NewNoticeForm from "./components/NewNoticeForm"
 import NoticeViewer from "../../components/NoticeViewer/NoticeViewer";
 
 class Group extends Component {
@@ -26,10 +24,30 @@ class Group extends Component {
     super(props);
     this.groupDesc = React.createRef();
 
+    // Subscribe to the relevant Pusher channel and listening for "new_activity" event.
+    // Whenever this event occurs in the channel, group activity feed is gonna be updated
     var channel = pusher.subscribe("group_" + this.props.match.params.gid);
     channel.bind("new_activity", this.updateGroupActivityFeed);
   }
 
+  state = {
+    trig: false,
+    i: 0,
+    inviteLink: "",
+    groupData: [],
+    announcements: [],
+    notices: [],
+    groupActivities: [],
+    completedTaskCount: 0,
+    taskCount: 0,
+    isAdmin: false,
+    selectedNotice: null,
+    percentage: 0,
+    description: "",
+    desEditable: false,
+  };
+
+  // This invokes when the Pusher channel gets a "new_activity" event
   updateGroupActivityFeed = data => {
     this.setState(prevState => ({
       groupActivities: [...prevState.groupActivities, JSON.parse(data)],
@@ -48,31 +66,17 @@ class Group extends Component {
       .catch(err => alert("Error"));
   };
 
-  state = {
-    trig: false,
-    inviteLink: "",
-    groupData: [],
-    announcements: [],
-    notices: [],
-    groupActivities: [],
-    completedTaskCount: 0,
-    taskCount: 0,
-    isAdmin: false,
-    selectedNotice: null,
-    percentage: 0,
-    description: "",
-    desEditable: false,
-  };
-
   componentDidMount() {
     SENDER.get("/exists/group/" + this.props.match.params.gid).then(res => {
       if (res.status > 400) {
         this.props.history.push("/");
       }
     });
+    //Check for invitation token in the URL parameters
     const params = new URLSearchParams(this.props.location.search);
     const itoken = params.get("itoken");
 
+    // If token is present, member is added to the group
     if (itoken) {
       SENDER.post("/member/" + itoken, null, {
         params: {
@@ -119,6 +123,7 @@ class Group extends Component {
       .catch(err => console.log(err));
   }
 
+  // This invokes immediately after a new task is added. 
   updateTaskList = () => {
     SENDER.get("/" + this.props.match.params.gid + "/tasks")
       .then(res => {
@@ -127,6 +132,7 @@ class Group extends Component {
       .catch(err => console.log(err));
   };
 
+  // This invokes immediately after a new announcement is added.
   updateNoticeList = () => {
     SENDER.get("/notices/group/" + this.props.match.params.gid)
       .then(res => {
@@ -143,6 +149,7 @@ class Group extends Component {
           groupId={this.props.match.params.gid}
         />
         <Row>
+          {/* Task list of the group */}
           <Col xs="12" sm="12" lg="3" style={{ marginTop: "0.5%" }}>
             <GroupTasks
               groupId={this.props.match.params.gid}
@@ -151,15 +158,19 @@ class Group extends Component {
             />
           </Col>
 
+          {/* Group Activity Feed */}
           <Col
             xs="12"
             sm="12"
             lg="4"
-            style={{ marginTop: "0.5%", paddingLeft: 0 }}
+            style={{
+              width: "100%",
+              backgroundColor: "white",
+              marginTop: "0.5%",
+              paddingLeft: 0,
+            }}
           >
-            <div>
-              <h5>Group Activity</h5>
-            </div>
+            <h5 style={{ margin: "1%" }}>Group Activity</h5>
             <CardBody style={{ padding: 0 }}>
               {this.state.groupActivities.length > 0 ? (
                 this.state.groupActivities.map(activity => (
@@ -177,17 +188,13 @@ class Group extends Component {
             </CardBody>
           </Col>
 
-          <Col
-            xs="12"
-            sm="6"
-            lg="3"
-            style={{ marginTop: "0.5%", paddingLeft: 0 }}
-          >
+          {/* Group description, announcements. Only admins can edit group 
+description and post announcements */}
+          <Col xs="12" sm="6" lg="3" style={{ marginTop: "0.5%" }}>
             <Card
               style={{
                 padding: "1%",
                 marginBottom: 0,
-                marginTop: "1%",
                 borderBottom: 0,
               }}
             >
@@ -216,7 +223,7 @@ class Group extends Component {
                   }}
                 >
                   {this.state.description ? (
-                    this.state.description
+                    <ReactMarkdown source={this.state.description} />
                   ) : (
                     <p style={{ marginTop: "1%", color: "gray" }}>
                       No description provided
@@ -259,7 +266,7 @@ class Group extends Component {
                   />
                 </div>
               </CardHeader>
-              <CardBody style={{ padding: 0 }}>
+              <CardBody style={{ padding: 0 }}>          
                 {this.state.notices.map(notice => {
                   return (
                     <Card
@@ -278,7 +285,7 @@ class Group extends Component {
                           flexDirection: "column",
                         }}
                       >
-                        <h6 style={{ margin: 0 }}>{notice.title}</h6>
+                        <h6 style={{ margin: 0,marginBottom: "2%" }}>{notice.title}</h6>
                         <i className="fa fa-calendar" />{" "}
                         <b>{notice.date.slice(0, 10)}</b>
                         <i
@@ -294,12 +301,14 @@ class Group extends Component {
                   id={
                     this.state.selectedNotice ? this.state.selectedNotice : ""
                   }
+                  i={this.state.i}
                   groupId={this.props.match.params.gid}
                 />
               </CardBody>
             </Card>
           </Col>
 
+          {/* Group members, admins */}
           <Col xs="12" sm="6" lg="2" style={{ padding: 0 }}>
             <GroupMembers
               isAdmin={this.state.isAdmin}

@@ -1,11 +1,12 @@
 import React,{ Component } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Input } from 'reactstrap'
+import Form from "react-bootstrap/Form";
 import Button  from 'react-bootstrap/Button'
 import Tab from 'react-bootstrap/Tab'
 import ReactMarkdown from 'react-markdown'
 import Tabs from 'react-bootstrap/Tabs'
-import SENDER from '../../utils/SENDER'
+import SENDER from '../../../../utils/SENDER'
 
 class NewNoticeForm extends Component{
     constructor(props, context) {
@@ -19,7 +20,8 @@ class NewNoticeForm extends Component{
           name: "",
           text: "",
           content: "",
-          title: ""
+          title: "",
+          error: ""
         };
       }
     
@@ -42,6 +44,7 @@ class NewNoticeForm extends Component{
       
       handleSubmit = e => {
         e.preventDefault()
+        this.setState({error: ""})
         if(this.state.title !== undefined && this.state.title.length>0){
           SENDER.post('/notices',{
             userId: localStorage.getItem('id'),
@@ -53,7 +56,10 @@ class NewNoticeForm extends Component{
               this.props.updateNoticeList()
               this.handleClose()
             }
-          }).catch(err => console.log(err))
+          }).catch(err => {
+            this.setState({error: "An error occured. Please try again"})
+            console.log(err)
+          })
         }  
       }
     
@@ -69,15 +75,27 @@ class NewNoticeForm extends Component{
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Input name="title" style={{marginBottom: "1%"}} placeholder="title" required onChange={this.handleChange}></Input>
-        <Tabs defaultActiveKey="write" id="uncontrolled-tab-example">
-  <Tab eventKey="write" title="Write">
-    <Input type="textarea" name="content" style={{height: "30vh"}} onChange={this.handleChange} id="exampleText" />
-  </Tab>
-  <Tab eventKey="preview" title="Preview" style={{}}>
-    <ReactMarkdown source={this.state.content} style={{textAlign: "justify",height: "30vh"}}/>
-  </Tab>
-</Tabs>
+        <p style={{textAlign: "center",color: "red"}}>{this.state.error}</p>
+        <Input name="title" style={{marginBottom: "1%"}} placeholder="title" required onChange={this.handleChange}></Input>
+        <Form.Group>
+          <label></label>
+          <Tabs defaultActiveKey="write" id="uncontrolled-tab-example">
+          <Tab eventKey="write" title="Write" style={{ padding: 0 }}>
+          <Form.Control
+            as="textarea"
+            name="content"
+            rows={6}
+            onChange={this.handleChange}
+          />
+          </Tab>
+          <Tab eventKey="preview" title="Preview" style={{height: "20vh"}}>
+            <ReactMarkdown source={this.state.content} />
+          </Tab>
+        </Tabs>
+
+          
+        </Form.Group>
+      
         </Modal.Body>
         <Modal.Footer>
           <p style={{color: "red",cursor: "pointer",marginTop: "4%"}} onClick={() => {this.setState({content: "",title: ""});this.handleClose()}}>Close</p>
