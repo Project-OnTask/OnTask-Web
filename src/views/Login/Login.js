@@ -14,21 +14,27 @@ class Login extends Component{
     } 
   }
 
+  // This function is called when the Login page is loading. It checks if there is a 
+  // logged in user. 
   componentDidMount(){
     axios.defaults.headers["Authorization"] = "Bearer " + localStorage.getItem("token");
     axios
     .get("/auth/user/me")
     .then(res => {
+      // If available, user will be redirected to dashboard
       alert("You are already logged as "+res.data.fname + ". Try logout first")
       this.props.history.push("/")
     })
     .catch(err => {
+      // else, user will continue to stay on the login page
       console.log("err: ", err);
     });
 
+    // This is used when a user wants to verify their email address.
+    // It checks for 'token' parameter in the URL 
     const params = new URLSearchParams(this.props.location.search);
     const token = params.get('token')
-    if(token){
+    if(token){//if token is found, send the token to backend and update the DB
       axios
     .post("/auth/verify/email/"+token)
     .then(res => {
@@ -49,6 +55,8 @@ class Login extends Component{
           <Col xs="12" sm="12" lg="9" className="p-2" style={{paddingRight: 0}}>
           <Card style={{height: "90vh",marginTop: "2.5%"}}>
                     <CardBody>
+              {/* This component contains Qr code and instructions that
+              are used to login with the mobile app. */}
                     <MobileLogin />
                     </CardBody>
                   </Card>
@@ -56,7 +64,8 @@ class Login extends Component{
 
           <Col xs="12" sm="12" lg="3" className="p-2">
           <Card style={{height: "90vh",marginTop: "8%"}}>
-          
+          {/* This component contains a simple form to login with email for
+          email users. */}
                     <CardBody>
                     <EmailLogin history={this.props.history}/>
                     </CardBody>
