@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody
-} from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import BasicInfoSettings from "./EditProfile/BasicInfoSettings";
@@ -66,7 +63,12 @@ class ProfilePane extends Component {
             <Tab eventKey="profile" title="Profile">
               <UserProfile id={this.props.id} trigger={this.state.trigger} />
             </Tab>
-            <Tab eventKey="edit" title={this.state.editEnabled ? "Edit profile & settings" : ""} style={{display: this.state.editEnabled ? "block" : "none"}}>
+            <Tab
+              eventKey="edit"
+              disabled={!this.state.editEnabled}
+              title={this.state.editEnabled ? "Edit profile & settings" : ""}
+              style={{ display: this.state.editEnabled ? "block" : "none" }}
+            >
               <Card>
                 <CardBody>
                   <BasicInfoSettings
@@ -109,7 +111,6 @@ class ProfilePane extends Component {
                 </CardBody>
               </Card>
             </Tab>
-         
           </Tabs>
         </CardBody>
       </Card>
