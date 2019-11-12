@@ -147,6 +147,7 @@ class Group extends Component {
         <GroupHeader
           name={this.state.groupData.name}
           groupId={this.props.match.params.gid}
+          isAdmin={this.state.isAdmin}
         />
         <Row>
           {/* Task list of the group */}
@@ -255,7 +256,7 @@ description and post announcements */}
                 </div>
               </CardBody>
             </Card>
-            <Card className="card-accent-secondary" style={{}}>
+            <Card className="card-accent-secondary" style={{borderTop: "none"}}>
               <CardHeader>
                 <b>Announcements</b>
                 <div className="card-header-actions">
@@ -267,7 +268,7 @@ description and post announcements */}
                 </div>
               </CardHeader>
               <CardBody style={{ padding: 0 }}>          
-                {this.state.notices.map(notice => {
+                { this.state.notices.length > 0 ? this.state.notices.map(notice => {
                   return (
                     <Card
                       style={{ margin: 0, cursor: "pointer" }}
@@ -296,7 +297,7 @@ description and post announcements */}
                       </CardBody>
                     </Card>
                   );
-                })}
+                }) : <p style={{textAlign: "center",padding: "3%"}}>No announcements yet</p>}
                 <NoticeViewer
                   id={
                     this.state.selectedNotice ? this.state.selectedNotice : ""

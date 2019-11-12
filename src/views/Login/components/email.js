@@ -11,7 +11,7 @@ const formStyle = {
   width: "100%",
   backgroundColor: "white",
   borderRadius: "10px",
-  paddingTop: "30%",
+  paddingBottom: "30%"
 };
 
 class EmailLogin extends Component {

@@ -45,7 +45,7 @@ export default function GroupTasks(props) {
           />
         </div>
       </CardHeader>
-      <CardBody style={{ backgroundColor: "#D6E0E3", padding: 0 }}>
+      <CardBody style={{ border: "none",backgroundColor: "", padding: 0 }}>
         {groupTasks.length > 0 ? (
           groupTasks.map(task => {
             const isAssigned =
@@ -81,8 +81,6 @@ export default function GroupTasks(props) {
         isAdmin={props.isAdmin}
         taskId={selectedTask && selectedTask.id}
         i={i}
-        // isAdmin={this.state.isAdmin}
-        // isAssigned={this.state.isSelectedTaskAssigned}
         groupName={props.groupName}
       />
     </Card>

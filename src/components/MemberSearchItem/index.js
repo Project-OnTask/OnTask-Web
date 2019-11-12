@@ -27,7 +27,7 @@ class MemberSearchItem extends Component {
           <div
       style={{
         alignItems: "center",
-        display: this.props.id !== parseInt(localStorage.getItem('id'))?"flex":"none",
+        display: "flex",
         flexDirection: "row",
         height: "5vh",
         paddingBottom: "2%"

@@ -33,8 +33,8 @@ const Comment = props => {
         )}
             </div>
             <div>
-            <p style={{margin: 0}}><b>{props.fname}</b> &#xB7; {fromNow}</p>
-            <div >
+            <p style={{margin: 0}}><b>{props.fname}</b> &#xB7; <span style={{color: "gray"}}>{fromNow}</span></p>
+            <div>
             <ReactMarkdown source={props.content} />
             
 </div>

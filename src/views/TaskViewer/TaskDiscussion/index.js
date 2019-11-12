@@ -34,10 +34,10 @@ const TaskDiscussion = props => {
 
   return (
     <Card className="border-light">
-      <CardHeader>
-        <i className="icon-speech" />
-        <b>Discussion</b>
-      </CardHeader>
+      <div style={{display: "flex",flexDirection: "row",height: "3vh",alignItems: "center"}}>
+      <i className="icon-speech" />
+        <b style={{marginLeft: "1%"}}>Discussion</b>
+      </div>
       <CardBody style={{ padding: 0, overflowY: "auto", paddingTop: "1%" }}>
         <p style={{ textAlign: "center", color: "red",display: error ? "block" : "none" }}>{error}</p>
         {comments.length > 0 ? (
