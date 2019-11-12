@@ -4,8 +4,7 @@ import NewGroupForm from "../../components/NewGroupForm";
 import pusher from "../../utils/PusherObject";
 import UserNotification from "./UserNotification";
 import SENDER from "../../utils/SENDER";
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
+import RequireAuth from "../../utils/HeadlessRequireAuth"
 import {
   Badge,
   UncontrolledDropdown,
@@ -118,7 +117,7 @@ class DefaultHeader extends Component {
         <Nav className="ml-auto" navbar style={{  }}>
           <NewGroupForm />
           <NavItem>
-            <UncontrolledDropdown>
+            <UncontrolledDropdown >
               <DropdownToggle nav direction="down">
                 <i className="icon-bell" size="10" />
                 <Badge pill color="danger" style={{display: this.state.noOfNotis ? "block" : "none" }}>
@@ -132,7 +131,7 @@ class DefaultHeader extends Component {
                     <UserNotification
                       id={notification.id || notification.n_id}
                       key={notification.id || notification.n_id}
-                      markAsSeen={() =>this.markNotificationAsSeen(n_id)}
+                      markAsSeen={() =>this.markNotificationAsSeen(notification.id || notification.n_id)}
                       description={notification.description || notification.activity.description}
                       createdAt={notification.createdAt || notification.activity.createdAt}
                     />
@@ -188,4 +187,4 @@ class DefaultHeader extends Component {
 DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;
 
-export default DefaultHeader;
+export default RequireAuth(DefaultHeader);
