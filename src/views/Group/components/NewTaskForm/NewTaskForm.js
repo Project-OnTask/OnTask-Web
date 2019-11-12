@@ -15,6 +15,7 @@ class NewTaskForm extends React.Component {
       show: false,
       name: "",
       isSubmitting: false,
+      error: "",
       description: "",
       dueDate: "",
       startDate: new Date().toJSON().slice(0,10)
@@ -35,6 +36,7 @@ class NewTaskForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
+    this.setState({error: ""})
     this.setState({isSubmitting: true})
     SENDER.post('/tasks',{
       name: this.state.name,
@@ -53,7 +55,7 @@ class NewTaskForm extends React.Component {
       }
     ).catch(
       err => {
-        alert("There was an error.Try again")
+        this.setState({error: "There was an error. Please try again"})
         this.setState({isSubmitting: false})
         console.error(err)
       }
@@ -72,7 +74,7 @@ class NewTaskForm extends React.Component {
           </Modal.Header>
           <Form onChange={this.handleChange} onSubmit={this.handleSubmit}>
           <Modal.Body>
-
+    <p style={{textAlign: "center",color: "red"}}>{this.state.error}</p>
               <Form.Group controlId="taskName">
                 <Form.Label>Name</Form.Label>
                 <Form.Control type="text" name="name" defaultValue={this.state.name} />
@@ -90,7 +92,7 @@ class NewTaskForm extends React.Component {
 
               <Form.Group controlId="dueDate">
                 <Form.Label>Due date</Form.Label>
-                <Form.Control type="date" name="dueDate" defaultValue={this.state.dueDate}/>
+                <Form.Control type="date" min={new Date(this.state.startDate).toJSON().slice(0,10)} name="dueDate" defaultValue={this.state.dueDate}/>
               </Form.Group>
           </Modal.Body>
           <Modal.Footer>

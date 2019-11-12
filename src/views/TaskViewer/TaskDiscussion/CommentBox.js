@@ -7,7 +7,7 @@ import ReactMarkdown from "react-markdown";
 
 const CommentBox = props => {
   const [input, setInput] = useState("");
-  const [isSubmitting,setSubmitStatus] = useState(false)
+  const [isSubmitting, setSubmitStatus] = useState(false);
 
   function handleChange(e) {
     setInput(e.target.value);
@@ -15,8 +15,8 @@ const CommentBox = props => {
 
   function postComment(event) {
     event.preventDefault();
-    props.setError("")
-    setSubmitStatus(true)
+    props.setError("");
+    setSubmitStatus(true);
     SENDER.post("/comments", {
       taskId: props.taskId,
       content: input,
@@ -24,13 +24,14 @@ const CommentBox = props => {
     })
       .then(res => {
         if (res.status === 200) {
-          setSubmitStatus(false)
+          setInput("")
+          setSubmitStatus(false);
         }
       })
       .catch(err => {
-        props.setError("")
-        setSubmitStatus(false)
-        console.log("Comment Error : " + err)
+        props.setError("");
+        setSubmitStatus(false);
+        console.log("Comment Error : " + err);
       });
   }
 
@@ -46,7 +47,7 @@ const CommentBox = props => {
           />
         </Tab>
         <Tab eventKey="preview" title="Preview">
-           <ReactMarkdown source={input} /> 
+          <ReactMarkdown source={input} />
         </Tab>
       </Tabs>
       <div
@@ -56,12 +57,12 @@ const CommentBox = props => {
         <Button
           color="success"
           onClick={postComment}
+          disabled={isSubmitting}
           style={{ marginTop: "1%", float: "right" }}
         >
-          Comment
+          {isSubmitting ? "Posting.." : "Comment"}
         </Button>
       </div>
-
     </>
   );
 };
