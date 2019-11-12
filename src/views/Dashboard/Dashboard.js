@@ -17,34 +17,30 @@ class Dashboard extends Component {
     this.state = {
       groups: [],
       assignedTasks: [],
+      areTasksAssigned: true,
       feedItems: [],
+      i:0,
       selectedTask: null,
     };
   }
 
-  toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen,
-    });
-  }
-
-  updateFeed = data => {
-    this.setState(prevState => ({
-      feedItems: [...prevState.feedItems, JSON.parse(data)],
-    }));
-  };
-
   async componentDidMount() {
-    SENDER.get("/user/" + localStorage.getItem("id") + "/tasks")
+    SENDER.get("/user/" + localStorage.getItem("id") + "/d-tasks")
       .then(res => {
-        this.setState({ assignedTasks: res.data });
+        const AssignedTasks = res.data.map(t => (
+          {
+            groupId: t.groupId,
+            ...t.task
+          }
+        ))
+        this.setState({ assignedTasks: AssignedTasks });
       })
       .catch(err => console.log(err));
 
     await SENDER.get("/" + localStorage.getItem("id") + "/groups")
       .then(res => {
         this.setState({ groups: res.data });
-        res.data.forEach(function setPusherListeners(group, index) {
+        res.data.map((group, index) => {
           var channel = pusher.subscribe("group_" + group.groupId);
           channel.bind("new_activity", this.updateFeed);
         });
@@ -60,12 +56,28 @@ class Dashboard extends Component {
       .catch(err => console.log(err));
   }
 
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+    });
+  }
+
+  updateFeed = data => {
+    this.setState(prevState => ({
+      feedItems: [...prevState.feedItems, JSON.parse(data)],
+    }));
+  };
+
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
   );
 
-  getClickedTask = task => {
-    this.setState({ selectedTask: task });
+  getClickedTask = (task,areTasksAssigned) => {
+    console.log("pp: ",task.groupId)
+    this.setState(prevState => {
+      return { i: prevState.i+1,selectedTask: task }
+    })
+    
   };
 
   render() {
@@ -73,9 +85,9 @@ class Dashboard extends Component {
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="12" lg="3" style={{ marginTop: "0.5%" }}>
-            <h6>My Tasks</h6>
+            <h6 style={{  }}>My Tasks</h6>
             {this.state.assignedTasks.length > 0 ? (
-              this.state.assignedTasks.map(task => {
+              this.state.assignedTasks.map(item => {
                 return (
                   <TaskItem
                     style={{
@@ -83,9 +95,10 @@ class Dashboard extends Component {
 
                       margin: 0,
                     }}
-                    key={task.id}
+                    key={item.id}
+                    isAssigned={true}
                     sendTask={this.getClickedTask}
-                    task={task}
+                    task={item}
                   />
                 );
               })
@@ -108,7 +121,10 @@ class Dashboard extends Component {
             <TaskViewer
               name={this.state.selectedTask ? this.state.selectedTask.name : ""}
               taskId={this.state.selectedTask ? this.state.selectedTask.id : ""}
+              groupId={this.state.selectedTask && this.state.selectedTask.groupId}
               isAdmin={this.state.isAdmin}
+              isAssigned={true}
+              i={this.state.i}
             />
           </Col>
 
@@ -129,11 +145,10 @@ class Dashboard extends Component {
             {this.state.feedItems.length > 0 ? (
               this.state.feedItems.map(feedItem => {
                 return (
-                  <Card style={{ marginBottom: 0 }}>
+                  <Card style={{ marginBottom: 0,border: "none" }}                         key={feedItem.id}>
                     <CardBody style={{ padding: "0.5%", paddingBottom: "2%" }}>
                       <FeedItem
                         id={feedItem.id}
-                        key={feedItem.id}
                         markAsSeen={() => {}}
                         description={
                           feedItem.description || feedItem.activity.description
@@ -163,6 +178,7 @@ class Dashboard extends Component {
               </Card>
             )}
           </Col>
+ 
           <Col xs="12" sm="12" lg="4" style={{ marginTop: "0.5%" }}>
             <div
               style={{
