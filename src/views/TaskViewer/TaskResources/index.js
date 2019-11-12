@@ -69,7 +69,7 @@ const TaskResources = props => {
                   </div>
                 </CardHeader>
                 <CardBody style={{ padding: 0 }}>
-                  {resources.map(resource => {
+                  {resources.length > 0 ? resources.map(resource => {
                     return (
                       <TaskResItem
                         key={resource.taskResId}
@@ -80,7 +80,7 @@ const TaskResources = props => {
                         cdate={resource.addedOn.slice(0, 10)}
                       />
                     );
-                  })}
+                  }) : <p style={{textAlign: "center",color: "gray",padding: "3%"}}>No resources</p>}
                 </CardBody>
               </Card>
               
