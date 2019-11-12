@@ -1,13 +1,29 @@
-import React from 'react';
-import QR from '../../../assets/img/qr.png'
-import './styles.css'
+import React, { useState, useEffect } from "react";
+import QR from "../../../assets/img/qr.png";
+import "./styles.css";
+import Axios from "axios";
 
 const QRDisplay = () => {
-    return (
-        <div className="image">
-            <img src={QR} alt="qr code" height="300" width="300"/>
-        </div>  
-    );
+    const [deviceId,setDeviceId] = useState("")
+
+  useEffect(() => {
+    setDeviceId("pppppppppppppppppp")
+  }, []);
+
+  return (
+    <div className="image">
+      <img
+      style={{display: deviceId ? "block" : "none"}}
+        src={
+          Axios.defaults.baseURL +
+          "/auth/mobile/signin/" + deviceId
+        }
+        alt="qr code"
+        height="400"
+        width="400"
+      />
+    </div>
+  );
 };
 
 export default QRDisplay;
