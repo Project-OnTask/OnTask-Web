@@ -99,16 +99,17 @@ const GroupForm = props => {
       >
         <div style={{textAlign: "center",color: "red"}}>{Error}</div>
         <Form.Group>
-          <label>Name</label>
+          <label>Name <span style={{color: "red"}}>*</span></label>
           <Form.Control required name="name" onChange={handleChange} />
         </Form.Group>
 
         <Form.Group>
-          <label>Description</label>
+          <label>Description <span style={{color: "red"}}>*</span></label>
           <Tabs defaultActiveKey="write" id="uncontrolled-tab-example">
           <Tab eventKey="write" title="Write" style={{ padding: 0 }}>
           <Form.Control
             as="textarea"
+            required
             name="description"
             rows={6}
             onChange={handleChange}
