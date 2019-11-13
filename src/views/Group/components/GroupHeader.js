@@ -1,36 +1,37 @@
 import React, { Component } from "react";
 import GroupSettings from "./GroupSettings";
+import { withRouter } from "react-router-dom";
 import SENDER from "../../../utils/SENDER";
+import { Bin, Lock, Unlocked } from "styled-icons/icomoon";
 import GroupInvite from "./GroupInvite";
-  
+
 class GroupHeader extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
-    popoverOpen: false,
     email: "",
-    message:
-      "I'm working on this project in OnTask and wanted to share it with you!",
     btnTxt: "Invite",
+    isPrivate: null
   };
 
-  toggle = () => {
-    this.setState({
-      popoverOpen: !this.state.popoverOpen,
-    });
+  componentDidMount() {
+    SENDER.get("/groups/" + this.props.groupId + "/status").then(res =>
+      this.setState({ isPrivate: res.data })
+    );
+  }
+
+  changeGroupStatus = () => {
+    SENDER.post("/groups/" + this.props.groupId + "/status", {
+      status: !this.state.isPrivate,
+      groupId: this.props.groupId,
+      changedById: localStorage.getItem("id")
+    }).then(res => this.setState({ isPrivate: !this.state.isPrivate }));
   };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  sendInvitation = () => {
-    SENDER.post("/member/" + this.state.email + "/join/" + this.props.groupId)
-      .then(res => {
-        this.setState({ btnTxt: "Sent" });
-        setTimeout(() => {
-          this.setState({ popoverOpen: false });
-        }, 500);
-      })
-      .catch(err => console.log(err));
   };
 
   render() {
@@ -49,12 +50,33 @@ class GroupHeader extends Component {
         }}
       >
         <h5>{this.props.name}</h5>
+        <div style={{display: this.props.isAdmin  ? "block" : "none",marginLeft: "2%"}}>
         <GroupInvite groupId={this.props.groupId} />
-        <span style={{ flexGrow: 1 }} />
-        <GroupSettings groupName={this.props.name} />
+        </div>
+        {this.state.isPrivate && this.state.isPrivate !== null ? (
+          <Lock
+            size="25"
+            style={{
+              marginLeft: "3%",
+              color: "white",
+              cursor: this.props.isAdmin ? "pointer" : "default"
+            }}
+            onClick={this.props.isAdmin ? this.changeGroupStatus : () => {}}
+          />
+        ) : (
+          <Unlocked
+            size="25"
+            style={{
+              marginLeft: "3%",
+              color: "white",
+              cursor: this.props.isAdmin ? "pointer" : "default"
+            }}
+            onClick={this.props.isAdmin ? this.changeGroupStatus : () => {}}
+          />
+        )}
       </div>
     );
   }
 }
 
-export default GroupHeader;
+export default withRouter(GroupHeader);
