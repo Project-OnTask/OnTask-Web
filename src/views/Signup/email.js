@@ -23,7 +23,6 @@ class EmailSignup extends Component {
     checked: false,
     CheckedError: false,
     Error: "",
-    success: "If you have a smartphone, please sign up on mobile app",
     isSubmitting: false,
     fname: "",
     email: "",
@@ -92,9 +91,7 @@ class EmailSignup extends Component {
           password: this.state.password,
         })
         .then(res => {
-          this.setState({
-            success: "Signed up successfully.Check your email inbox",
-          });
+          this.props.onSuccessfulSignup(true,this.state.email)
         })
         .catch(err => {
           console.log(err);
@@ -104,95 +101,95 @@ class EmailSignup extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit} style={formStyle}>
-        <div style={{ textAlign: "center" }}>
-          <img src={Logo} height="100" width="100" alt="" />
-          <h5>Sign up with Email</h5>
-        </div>
-        <p style={{ textAlign: "center", color: "red" }}>{this.state.Error}</p>
-        <p style={{ textAlign: "center", color: "green" }}>
-          {this.state.success}
-        </p>
-        <Form.Group>
-          <label>First name</label>
-          <Form.Control
-            name="fname"
-            style={{ width: "70%" }}
-            onChange={this.handleChange}
-          />
-          <Form.Text style={{ color: "red" }}>
-            {this.state.FirstNameError}
-          </Form.Text>
-        </Form.Group>
-
-{/* Email Address */}
-        <Form.Group>
-          <label>Email Address</label>
-          <Form.Control
-            type="email"
-            name="email"
-            onChange={this.handleChange}
-          />
-          <Form.Text style={{ color: "red" }}>
-            {this.state.EmailError}
-          </Form.Text>
-        </Form.Group>
-
-{/*Password and confirm password fields*/}
-        <Form.Text style={{ color: "red" }}>
-          {this.state.PasswordError}
-        </Form.Text>
-        <Form.Row>
-          <Col sm={12} md={6}>
-            <Form.Group>
-              <label>Password</label>
-              <Form.Control
-                type="password"
-                name="password"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-          </Col>
-          <Col sm={12} md={6}>
-            <Form.Group>
-              <label></label>
-              <Form.Control
-                style={{ marginTop: "2.5%" }}
-                name="c_pass"
-                onChange={this.handleChange}
-                type="password"
-                placeholder="confirm password"
-              />
-            </Form.Group>
-          </Col>
-        </Form.Row>
-
-        <Form.Group>
-          <Form.Check
-            type="checkbox"
-            onChange={this.handleChecked}
-            label={<p>
-              I agree to terms and <Link to="/privacy-policy">privacy policy</Link>
-            </p>}
-          />
-          <Form.Text style={{ color: "red" }}>
-            {this.state.CheckedError}
-          </Form.Text>
-        </Form.Group>
-
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            className="btns"
-            variant="success"
-            type="submit"
-            disabled={this.state.isSubmitting ? true : false}
-          >
-            {this.state.isSubmitting ? "Signing you up.." : "Create Account"}
-          </Button>
-        </div>
-      </Form>
-      // </div>
-    );
+        <Form onSubmit={this.handleSubmit} style={formStyle}>
+                <div style={{ textAlign: "center" }}>
+                  <img src={Logo} height="100" width="100" alt="" />
+                  <h5>Sign up with Email</h5>
+                </div>
+                <p style={{ textAlign: "center", color: "red" }}>{this.state.Error}</p>
+                <p style={{ textAlign: "center", color: "black" }}>
+                If you have a smartphone, please sign up on mobile app
+                </p>
+                <Form.Group>
+                  <label>First name</label>
+                  <Form.Control
+                    name="fname"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Text style={{ color: "red" }}>
+                    {this.state.FirstNameError}
+                  </Form.Text>
+                </Form.Group>
+        
+        {/* Email Address */}
+                <Form.Group>
+                  <label>Email Address</label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Text style={{ color: "red" }}>
+                    {this.state.EmailError}
+                  </Form.Text>
+                </Form.Group>
+        
+        {/*Password and confirm password fields*/}
+                <Form.Text style={{ color: "red" }}>
+                  {this.state.PasswordError}
+                </Form.Text>
+                <Form.Row>
+                  <Col sm={12} md={6}>
+                    <Form.Group>
+                      <label>Password</label>
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col sm={12} md={6}>
+                    <Form.Group>
+                      <label></label>
+                      <Form.Control
+                        style={{ marginTop: "2.5%" }}
+                        name="c_pass"
+                        onChange={this.handleChange}
+                        type="password"
+                        placeholder="confirm password"
+                      />
+                    </Form.Group>
+                  </Col>
+                </Form.Row>
+        
+                <Form.Group>
+                  <Form.Check
+                    type="checkbox"
+                    onChange={this.handleChecked}
+                    label={<p>
+                      I agree to terms and <Link to="/privacy-policy">privacy policy</Link>
+                    </p>}
+                  />
+                  <Form.Text style={{ color: "red" }}>
+                    {this.state.CheckedError}
+                  </Form.Text>
+                </Form.Group>
+        
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Button
+                    className="btns"
+                    variant="success"
+                    type="submit"
+                    disabled={this.state.isSubmitting ? true : false}
+                  >
+                    {this.state.isSubmitting ? "Signing you up.." : "Create Account"}
+                  </Button>
+                </div>
+              </Form>
+    )   
+    
+   
   }
 }
 

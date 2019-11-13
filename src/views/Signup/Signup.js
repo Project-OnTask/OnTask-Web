@@ -34,7 +34,33 @@ const styles = {
   },
 };
 
+const SuccessMsg = props => {
+  return (<div style={{textAlign: "center"}}>
+    <h4>Almost there..</h4>
+    <p>Please check your email <b>({props.email})</b>
+to confirm your account.</p>
+<hr />
+<p>If <b>{props.email}</b> is not your email address, please go back and enter the correct one.</p>
+
+<p>If you haven't received our email in 15 minutes, please check your spam folder.</p>
+
+<p>Still can't find it? Try searching Gmail for in:all subject:(OnTask - Confirm email)</p>
+  </div>)
+}
+
 class Signup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userEmail: "",
+      isSuccess: false
+    }
+  }
+
+  setSuccess = (isSignupSuccess,email) => {
+    this.setState({isSuccess: isSignupSuccess,userEmail: email})
+  }
+  
   componentDidMount() {
     axios.get("/auth/user/me").then(res => {
       if (res.data.id > 0) {
@@ -56,7 +82,10 @@ class Signup extends Component {
   render() {
     return (
       <div style={styles.background}>
-                  <EmailSignup />
+        {this.state.isSuccess ? <SuccessMsg 
+          email={this.state.userEmail}
+        />: 
+                          <EmailSignup onSuccessfulSignup={this.setSuccess}/>}
                   <h6 style={{marginTop: "1%",textAlign: "center"}}>Have an account? <Link to="/login">Login</Link></h6>  
       </div>
     );
