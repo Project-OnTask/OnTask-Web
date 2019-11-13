@@ -79,9 +79,11 @@ class EmailLogin extends Component {
             <img src={Logo} alt="" height="100" width="100" />
           </div>
           <h4 style={{ textAlign: "center" }}>Login with Email</h4>
+          {/* Displays any error that occurs when logging in */}
           <p style={{ color: "red", textAlign: "center" }}>
             {this.state.loginError}
           </p>
+          {/* Email address */}
           <Form.Group>
             <label>Email Address</label>
             <Form.Control
@@ -94,6 +96,7 @@ class EmailLogin extends Component {
             </Form.Text>
           </Form.Group>
 
+{/* Password */}
           <Form.Group>
             <label>
               Password <Link to="/forgot-password">Forgot password?</Link>

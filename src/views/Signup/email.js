@@ -81,7 +81,7 @@ class EmailSignup extends Component {
         CheckedError: "You should agree to our terms & conditions",
         isSubmitting: false,
       });
-    } else {
+    } else {//If neither of above errors occur
       const username = this.state.email.split("@")[0];
       axios
         .post("/auth/signup", {
