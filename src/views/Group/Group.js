@@ -174,7 +174,7 @@ class Group extends Component {
             <h5 style={{ margin: "1%" }}>Group Activity</h5>
             <CardBody style={{ padding: 0 }}>
               {this.state.groupActivities.length > 0 ? (
-                this.state.groupActivities.map(activity => (
+                this.state.groupActivities.reverse().map(activity => (
                   <GroupActivityItem
                     description={activity.description
                       .split("in group")[0]
