@@ -25,7 +25,16 @@ class GroupMemberItem extends Component {
     }).then(res => alert("abc")).catch(err => console.log(err))
   }
 
-  removeFromGroup = () => {}
+  removeFromGroup = userId => {
+    SENDER.delete("/member/"+this.props.groupId+"/remove/"+userId,{
+      params: {
+        delBy: localStorage.getItem('id')
+      }
+    }).then(
+      res => alert("abc")).catch(
+        err => console.log(err)
+      )
+  }
 
   render() {
     return (
@@ -71,7 +80,7 @@ class GroupMemberItem extends Component {
         <UncontrolledDropdown
           direction="down"
           style={{
-            display: this.props.isAdmin ? "block" : "none",
+            //display: this.props.userId === localStorage.getItem('id') ? "block" : "none",
             marginTop: "-1.5%",
           }}
         >
@@ -82,7 +91,7 @@ class GroupMemberItem extends Component {
             <DropdownItem
               onClick={this.makeMemberAdmin}
               style={{
-                display: this.props.m_role === "member" ? "block" : "none",
+                display: this.props.m_role === "member" && this.props.isAdmin ? "block" : "none",
                 border: 0
               }}
             >
@@ -90,14 +99,16 @@ class GroupMemberItem extends Component {
             </DropdownItem>
             <DropdownItem
               style={{
-                display: this.props.m_role === "admin" ? "block" : "none",
+                display: this.props.m_role === "admin" && this.props.isAdmin ? "block" : "none",
                 border: 0
               }}
               onClick={this.removeFromAdmin}
             >
               Remove admin
             </DropdownItem>
-            <DropdownItem onClick={this.removeFromGroup}>Remove from group</DropdownItem>
+            <DropdownItem 
+           style={{display:  this.props.userId == localStorage.getItem('id') ? "block":"none" }}
+            onClick={() => this.removeFromGroup(this.props.userId)}>Remove from group</DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
       </ListGroupItem>

@@ -24,8 +24,6 @@ const GroupMembers = props => {
 
     return (
       <>
-        {/* <Card style={{ padding: 0,margin: 0, height: "84vh" }}>
-    <CardBody style={{ padding: 0 }}>  */}
     <div style={{height: "83vh",paddingBottom: 0,backgroundColor: "white",display: "flex",flexDirection: "column"}}>
             <b style={{margin: "1% 1% 1% 3%"}}>Admins</b>
          
