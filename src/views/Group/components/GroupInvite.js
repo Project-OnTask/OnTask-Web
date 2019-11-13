@@ -46,6 +46,25 @@ class GroupInviteModal extends React.Component {
     ).catch(err => console.log(err))
   }
 
+sendInvitationToUsers = data => {
+  SENDER.post("/member/"+this.props.groupId+"/join-email",{
+    createdById: localStorage.getItem('id'),
+    receiverId: data.userId,
+    groupId: this.props.groupId
+  }).then(
+    res => {
+      if(res.status === 200){
+        const newSR = this.state.searchResults.filter(function(value, index, arr) {
+          return value !== data;
+        });
+        this.setState({ searchResults: newSR });
+        this.state.groupMembers.push(data);
+        this.setState({ trig: !this.state.trig });
+      }
+    }
+  ).catch(err => console.log(err))
+}
+
   addMember = data => {
     SENDER.post('/members',{
       userId: data.userId,
@@ -84,8 +103,6 @@ class GroupInviteModal extends React.Component {
               }
             }
           }
-
-          console.log(result);
           this.setState({ searchResults: result });
         })
         .catch(err => console.log(err));
@@ -180,7 +197,7 @@ class GroupInviteModal extends React.Component {
                     key={result.userId}
                     id={result.userId}
                     data={result}
-                    selectMember={this.addMember}
+                    selectMember={this.sendInvitationToUsers}
                     name={result.fname + " " + lname}
                   />
                 );
