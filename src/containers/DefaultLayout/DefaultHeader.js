@@ -5,6 +5,7 @@ import pusher from "../../utils/PusherObject";
 import UserNotification from "./UserNotification";
 import SENDER from "../../utils/SENDER";
 import RequireAuth from "../../utils/HeadlessRequireAuth"
+import {Search} from 'styled-icons/material/Search'
 import {
   Badge,
   UncontrolledDropdown,
@@ -18,7 +19,7 @@ import PropTypes from "prop-types";
 
 import { AppNavbarBrand } from "@coreui/react";
 import logo from "../../assets/img/brand/logo.PNG";
-
+import { InputGroup, InputGroupAddon, InputGroupText, Input} from 'reactstrap'
 const propTypes = {
   children: PropTypes.node,
 };
@@ -42,7 +43,7 @@ class DefaultHeader extends Component {
   updateNotifications = data => {
     this.setState(prevState => ({
       noOfNotis: prevState.noOfNotis + 1,
-      notifications: [...prevState.notifications, JSON.parse(data)],
+      notifications: [...prevState.notifications.reverse(), JSON.parse(data)],
     }));
   };
 
@@ -87,12 +88,20 @@ class DefaultHeader extends Component {
           full={{ src: logo, width: 50, height: 50, alt: "OnTask" }}
           href="/dashboard"
         />
+<InputGroup style={{width: "20%",marginLeft: "1%",}}>
+        <Input placeholder="Search.." />
+        <InputGroupAddon addonType="append">
+          <InputGroupText>
+            <Search size={20}/>
+          </InputGroupText>
+        </InputGroupAddon>
+      </InputGroup>
 
         <Nav navbar style={{ height: "3vh" }}>
           <UncontrolledDropdown
             style={{
               display: this.state.groups.length > 0 ? "block" : "none",
-              marginLeft: "5%",
+              marginLeft: "10%",
             }}
           >
             <DropdownToggle caret nav direction="down">
@@ -126,7 +135,6 @@ class DefaultHeader extends Component {
               </DropdownToggle>
               <DropdownMenu>
                 {this.state.notifications.length > 0 ? this.state.notifications.map(notification => {
-                  const n_id = notification.n_id ? notification.n_id : notification.id
                   return (
                     <UserNotification
                       id={notification.id || notification.n_id}
