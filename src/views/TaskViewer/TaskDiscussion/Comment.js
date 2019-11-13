@@ -2,16 +2,22 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown'
 import moment from "moment";
 
+const styles = {
+  container: {display: "flex",flexDirection: "row"},
+  imgContainer: {marginRight: "1%"},
+  author: {margin: 0}
+}
+
 const Comment = props => {
 
+    //Calculate the difference between today and created day
     const fromNow =  moment(new Date(props.createdAt)).fromNow()
 
     return (
-        <div style={{display: "flex",flexDirection: "row"}}>
-            <div style={{marginRight: "1%"}}>
+        <div style={styles.container}>
+            <div style={styles.imgContainer}>
             {props.img ? (
           <img
-            style={{ borderRadius: "50%" }}
             className="img-avatar"
             width="25"
             height="25"
@@ -33,7 +39,7 @@ const Comment = props => {
         )}
             </div>
             <div>
-            <p style={{margin: 0}}><b>{props.fname}</b> &#xB7; <span style={{color: "gray"}}>{fromNow}</span></p>
+            <p style={styles.author}><b>{props.fname}</b> &#xB7; <span style={{color: "gray"}}>{fromNow}</span></p>
             <div>
             <ReactMarkdown source={props.content} />
             

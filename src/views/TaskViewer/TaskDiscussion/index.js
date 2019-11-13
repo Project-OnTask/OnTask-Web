@@ -24,6 +24,7 @@ const TaskDiscussion = props => {
   channel.bind("new_comment", addComments);
 
   useEffect(() => {
+    //Get comments of a task
     SENDER.get("/comments/" + parseInt(props.taskId))
       .then(res => {
         console.log("comments: ", res.data);
@@ -40,6 +41,7 @@ const TaskDiscussion = props => {
       </div>
       <CardBody style={{ padding: 0, overflowY: "auto", paddingTop: "1%" }}>
         <p style={{ textAlign: "center", color: "red",display: error ? "block" : "none" }}>{error}</p>
+        {/* Map comments */}
         {comments.length > 0 ? (
           comments.map(comment => {
             return (

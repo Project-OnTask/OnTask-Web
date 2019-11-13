@@ -37,6 +37,8 @@ const CommentBox = props => {
 
   return (
     <>
+    {/* One tab contains the input to type the content while the other tab is 
+    rendering whatever being typed */}
       <Tabs defaultActiveKey="write" id="uncontrolled-tab-example">
         <Tab eventKey="write" title="Write" style={{ padding: 0 }}>
           <Input
