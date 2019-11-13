@@ -9,6 +9,7 @@ import { Row, Col, Card, CardBody } from "reactstrap";
 import EducationItem from "./components/EducationItem";
 import WorkItem from "./components/WorkItem";
 import moment from 'moment'
+import ReactMarkdown from "react-markdown";
 
 const links = [
   {
@@ -74,7 +75,7 @@ const UserProfile = props => {
               (lname ? lname : " ")}
           </h3>
           {userData.bio ? (
-            userData.bio
+            <ReactMarkdown source={userData.bio} />
           ) : localStorage.getItem("id") === props.id ? (
             <h6 style={{color: "gray"}}>
               Your <i>About me</i> is empty
@@ -132,13 +133,11 @@ const UserProfile = props => {
                 display: "flex",
                 flexDirection: "row",
                 height: "4vh",
-                marginTop: "1%",
-                paddingBottom: "0.5%",
                 alignItems: "center",
               }}
             >
               <i
-                style={{ fontSize: 18,color: "gray" }}
+                style={{ fontSize: 18,marginRight: "1%",color: "gray" }}
                 className="fa fa-graduation-cap"
               ></i>
               <h4>Education</h4>
@@ -178,14 +177,12 @@ const UserProfile = props => {
                 display: "flex",
                 flexDirection: "row",
                 height: "4vh",
-                padding: "2%",
                 paddingLeft: 0,
-                paddingBottom: "0.5%",
                 alignItems: "center",
               }}
             >
               <i
-                style={{ fontSize: 18,paddingRight: "1%",color: "gray" }}
+                style={{ fontSize: 18,marginRight: "1%",color: "gray" }}
                 className="fa fa-briefcase"
               ></i>
               <h4>Work</h4>

@@ -52,21 +52,21 @@ class Login extends Component{
       <div style={{minHeight: "100vh",backgroundColor: "#1FDC75"}}>
        
       <Row style={{margin: 0}}>
-          <Col xs="12" sm="12" lg="9" className="p-2" style={{paddingRight: 0}}>
-          <Card style={{height: "90vh",marginTop: "2.5%"}}>
+          {/*<Col xs="12" sm="12" lg="9" className="p-2" style={{paddingRight: 0}}>
+           <Card style={{height: "90vh",marginTop: "2.5%"}}>
                     <CardBody>
               {/* This component contains Qr code and instructions that
               are used to login with the mobile app. */}
-                    <MobileLogin />
+                  {/*  <MobileLogin />
                     </CardBody>
                   </Card>
-          </Col>
-
-          <Col xs="12" sm="12" lg="3" className="p-2">
+          </Col> */}
+          <Col xs="12" sm="12" lg="4" className="p-2"></Col>
+          <Col xs="12" sm="12" lg="4" className="p-2">
           <Card style={{height: "90vh",marginTop: "8%"}}>
           {/* This component contains a simple form to login with email for
           email users. */}
-                    <CardBody>
+                    <CardBody style={{paddingTop: "18%"}}>
                     <EmailLogin history={this.props.history}/>
                     </CardBody>
                   </Card>

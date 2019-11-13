@@ -83,7 +83,7 @@ const BasicInfoSettings = props => {
           </Col>
         </Row>
         username
-        <Input name="username" style={{width: "40%"}} onChange={validateUsername} placeholder={userData.username} />
+        <Input name="username" style={{width: "47%"}} onChange={validateUsername} placeholder={userData.username} />
         <p style={{color: "red"}}>{usernameDuplicateError}</p>
         About me
         <Tabs defaultActiveKey="write" id="uncontrolled-tab-example">

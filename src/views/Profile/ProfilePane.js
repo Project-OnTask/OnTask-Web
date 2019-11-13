@@ -53,7 +53,7 @@ class ProfilePane extends Component {
     const { children, ...attributes } = this.props;
 
     return (
-      <Card style={{ padding: "1%" }}>
+      <Card style={{ padding: "1%",border: "none" }}>
         <CardBody style={{ padding: 0 }}>
           <Tabs
             id="controlled-tab-example"

@@ -7,8 +7,8 @@ const UserNotification = props => {
   var htmlToReactParser = new HtmlToReactParser();
 
   return (
-    <DropdownItem onClick={props.markAsSeen}>
-      <div style={{ display: "flex", flexDirection: "row" }}>
+    <DropdownItem style={{border: 0}}onClick={props.markAsSeen}>
+      <div style={{ display: "flex", flexDirection: "row",height: "3vh",alignItems: "center" }}>
         <i className="fa fa-bell" />
         <p style={{ margin: 0 }}>
           {htmlToReactParser.parse(props.description)}

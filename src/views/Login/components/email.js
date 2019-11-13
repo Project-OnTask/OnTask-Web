@@ -122,6 +122,7 @@ class EmailLogin extends Component {
             </Button>
           </div>
         </Form>
+        <h6 style={{paddingTop: "2%",textAlign: "center"}}>Don't have an account? <Link to="/signup">Create One</Link></h6>
       </div>
     );
   }

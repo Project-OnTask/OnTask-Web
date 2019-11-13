@@ -48,12 +48,12 @@ const EducationSettings = () => {
     <>
       <div style={{display: "flex",flexDirection: "row"}}>
         <h5>Education</h5>
-        <div style={{display: successMsg || errMsg ? "block" : "none"}}>
-        <p style={{display: successMsg ? "block" : "none",color: "green"}}>{successMsg}</p>
-        <p style={{display: errMsg ? "block" : "none",color: "red"}}>{errMsg}</p>
-      </div>
         <div style={{flexGrow: 1}} />
         <p style={{cursor: "pointer",color: "blue"}} onClick={() => setFormVisible(!isFormVisible)}>{isFormVisible ? "Hide Form" : "Add new Education"}</p>
+      </div>
+      <div style={{display: successMsg || errMsg ? "block" : "none"}}>
+        <p style={{display: successMsg ? "block" : "none",color: "green"}}>{successMsg}</p>
+        <p style={{display: errMsg ? "block" : "none",color: "red"}}>{errMsg}</p>
       </div>
       {education.map( EduItem => 
             <EducationItem 
