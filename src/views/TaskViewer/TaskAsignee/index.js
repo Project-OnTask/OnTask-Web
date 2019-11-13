@@ -11,6 +11,17 @@ const SubTasks = props => {
     const [asignees,setAsignees] = useState([])
     const [searchResults,setSearchResults] = useState([])
 
+    useEffect(
+      () => {
+
+        SENDER.get('/task-asignee/'+props.taskId).then(
+          res => {
+            setAsignees(res.data)
+          }
+        ).catch(err => console.log(err))
+      },[trig,props.taskId]
+    )
+    
     function handleChange(e){
       SENDER.get('/member/'+props.groupId+"/search/"+e.target.value).then(
         res => {
@@ -43,22 +54,13 @@ const SubTasks = props => {
       setTrig(!trig)
     }
 
-    useEffect(
-      () => {
-
-        SENDER.get('/task-asignee/'+props.taskId).then(
-          res => {
-            setAsignees(res.data)
-          }
-        ).catch(err => console.log(err))
-      },[trig,props.taskId]
-    )
     return (
         <Card style={{border: "none"}}>
                 <CardHeader>
                   <User size={20} />
                   <b>Assignees</b>
                   <div className="card-header-actions">
+                  
                     <i
                       style={{
                         cursor: "pointer",
