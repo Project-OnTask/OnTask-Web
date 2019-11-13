@@ -80,7 +80,6 @@ class GroupMemberItem extends Component {
         <UncontrolledDropdown
           direction="down"
           style={{
-            //display: this.props.userId === localStorage.getItem('id') ? "block" : "none",
             marginTop: "-1.5%",
           }}
         >
@@ -107,7 +106,7 @@ class GroupMemberItem extends Component {
               Remove admin
             </DropdownItem>
             <DropdownItem 
-           style={{display:  this.props.userId == localStorage.getItem('id') ? "block":"none" }}
+           style={{display:  this.props.userId == localStorage.getItem('id') || this.props.isAdmin? "block":"none" }}
             onClick={() => this.removeFromGroup(this.props.userId)}>Remove from group</DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
