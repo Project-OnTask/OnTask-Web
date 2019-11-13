@@ -40,7 +40,7 @@ const SuccessMsg = props => {
     <p>Please check your email <b>({props.email})</b>
 to confirm your account.</p>
 <hr />
-<p>If <b>{props.email}</b> is not your email address, please go back and enter the correct one.</p>
+<p>If <b>{props.email}</b> is not your email address, please refresh and enter the correct one.</p>
 
 <p>If you haven't received our email in 15 minutes, please check your spam folder.</p>
 
