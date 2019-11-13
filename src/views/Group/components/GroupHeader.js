@@ -22,6 +22,14 @@ class GroupHeader extends Component {
     );
   }
 
+  componentDidUpdate(prevProps){
+    if(this.props !== prevProps){
+      SENDER.get("/groups/" + this.props.groupId + "/status").then(res =>
+        this.setState({ isPrivate: res.data })
+      );
+    }
+  }
+
   changeGroupStatus = () => {
     SENDER.post("/groups/" + this.props.groupId + "/status", {
       status: !this.state.isPrivate,
