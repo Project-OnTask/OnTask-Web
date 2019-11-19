@@ -49,21 +49,20 @@ class Login extends Component{
 
   render(){
     return (
-      <div style={{minHeight: "100vh",backgroundColor: "#1FDC75"}}>
+      <div style={{minHeight: "100vh",width: "100%",display: "flex",alignItems: "center",backgroundColor: "#1FDC75"}}>
        
-      <Row style={{margin: 0}}>
-          {/*<Col xs="12" sm="12" lg="9" className="p-2" style={{paddingRight: 0}}>
-           <Card style={{height: "90vh",marginTop: "2.5%"}}>
+      <Row style={{margin: 0,width: "100%",marginTop: "2%"}}>
+          <Col xs="12" sm="12" lg="9" className="p-2" style={{paddingRight: 0}}>
+           <Card style={{minHeight: "90vh"}}>
                     <CardBody>
               {/* This component contains Qr code and instructions that
               are used to login with the mobile app. */}
-                  {/*  <MobileLogin />
+                   <MobileLogin />
                     </CardBody>
                   </Card>
-          </Col> */}
-          <Col xs="12" sm="12" lg="4" className="p-2"></Col>
-          <Col xs="12" sm="12" lg="4" className="p-2">
-          <Card style={{height: "90vh",marginTop: "8%"}}>
+          </Col>
+          <Col xs="12" sm="12" lg="3" className="p-2">
+          <Card style={{minHeight: "90vh"}}>
           {/* This component contains a simple form to login with email for
           email users. */}
                     <CardBody style={{paddingTop: "18%"}}>
