@@ -22,7 +22,6 @@ const BasicInfoSettings = props => {
       basicUserData
     )
       .then(res => {
-        props.onUpdate()
         setErrMsg("")
         setSuccessMsg("Updated successfully.");
       })

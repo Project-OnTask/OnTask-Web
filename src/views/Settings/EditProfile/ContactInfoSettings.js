@@ -50,37 +50,30 @@ const ContactInfoSettings = props => {
         <p style={{display: errMsg ? "block" : "none",color: "red"}}>{errMsg}</p>
       </div>
       <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col style={styles.column} sm={12} md={5}>
-            <div style={styles.cont}>
-              <p style={styles.label}>mobile</p>
+
+
+              <label>mobile</label>
               <IntlTelInput
                 preferredCountries={["LK"]}
                 defaultCountry={"LK"}
                 defaultValue={"+1 555-555-5555"}
                 onChange={mobi => setMobile(mobi.intlPhoneNumber)}
               />
-            </div>
-          </Col>
-          <Col style={styles.column} sm={12} md={5}>
-            <div style={styles.cont}>
-              <p style={styles.label}>email</p>
+        
+              <label style={{marginTop: "3%"}}>email</label>
               <Input
                 name="email"
                 placeholder=""
                 type="email"
                 onChange={handleChange}
               ></Input>
-            </div>
-          </Col>
-          <Col>
-            <Col style={styles.column} sm={12} md={2}>
-              <Button color="success" type="submit">
+            
+      
+      
+              <Button color="success" type="submit" style={{marginTop: "3%"}}>
                 Update
               </Button>
-            </Col>
-          </Col>
-        </Row>
+      
       </Form>
     </>
   );
