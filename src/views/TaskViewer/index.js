@@ -26,6 +26,7 @@ import {
   Input,
   DropdownToggle,
 } from "reactstrap";
+import axios from 'axios'
 
 const TaskViewer = props => {
   const [show, setShow] = useState(false);
@@ -33,9 +34,10 @@ const TaskViewer = props => {
   const [percentage, setPercentage] = useState(0);
   const [groupName, setGroupName] = useState("");
   const [isUserAdmin, setIsUserAdmin] = useState("");
-
   const [description, setDescription] = useState("");
   const [task, setTask] = useState([]);
+  const [isAddingOutlook,setOutlookStatus] = useState(true)
+  const [outlookCode,setOutlookCode] = useState("")
   const [desEditable, setDesEditable] = useState(false);
   const [EditTaskInfo, setEditTaskInfo] = useState(false);
   const desc = useRef(null);
@@ -67,6 +69,14 @@ const TaskViewer = props => {
       .catch(err => console.log(err));
 
       }
+
+    SENDER.get('/users/'+localStorage.getItem('id')+"/outlook").then(
+      res => {
+        console.log("outlook: ",res.data)
+        setOutlookCode(res.data)
+      }
+    ).catch(err => console.log("Outlook Error: "+err))
+    
   }, [props.i, props.taskId,props.groupId]);
 
   function deleteTask() {
@@ -94,6 +104,37 @@ const TaskViewer = props => {
   const closeModal = () => {
     setShow(false);
   };
+
+  function addToOutlook(){
+    if(outlookCode){
+      const getTokenURL = `https://login.microsoftonline.com/common/oauth2/v2.0/token?scope=user.read%20Calendars.ReadWrite&redirect_uri=http%3A%2F%2Flocalhost%2F3000%2Foutlook`
+
+      const params = new URLSearchParams();
+      
+      params.append('grant_type', 'authorization_code');
+      params.append('code', outlookCode);
+      params.append('client_id',process.env.REACT_APP_OUTLOOK_APP_ID);
+      params.append('client_secret', process.env.REACT_APP_OUTLOOK_SECRET_KEY);
+      
+      console.log(params)
+      setOutlookStatus(true)
+      axios.post(getTokenURL, params,{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res => 
+        console.log(res.data)
+      ).catch(
+        err => {
+          setOutlookStatus(false)
+          alert("There was an error when integrating with Outlook. Please try again.")
+          console.log(err)
+        })
+    }
+    else{
+      alert("This account has not been connected to Outlook.")
+    }  
+}
 
   const getSubTaskStats = (completed, total) => {
     setSubtaskTotal(total);
@@ -219,17 +260,18 @@ const TaskViewer = props => {
                       )}
                     </h6>
                   </div>
+                 
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "row",
                       padding: "1%",
                     }}
-                    onClick={() => {}}
                   >
                     <Microsoft size={15} />
-                    <h6 style={{ marginLeft: "2.5%" }}>Add to Outlook</h6>
+                    <h6 style={{ marginLeft: "2.5%",cursor: "pointer", opacity: isAddingOutlook ? 0.2 : 1}} onClick={addToOutlook}>Add to Outlook</h6>
                   </div>
+
                   <div
                     style={{
                       display: "flex",
