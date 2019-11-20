@@ -14,30 +14,30 @@ import ReactMarkdown from "react-markdown";
 const links = [
   {
     icon: "fa fa-envelope",
-    type: "email",
+    type: "email_addr",
   },
   {
     icon: "fa fa-phone",
     type: "mobile",
   },
   {
-    icon: <Clock size={20}/>,
+    icon: <Clock size={20} />,
     type: "member_time",
   },
   {
-    icon: <Github size={20}/>,
+    icon: <Github size={20} />,
     type: "githubLink",
-    tag: "a"
+    tag: "a",
   },
   {
-    icon: <Link2 size={20}/>,
+    icon: <Link2 size={20} />,
     type: "websiteLink",
-    tag: "a"
+    tag: "a",
   },
   {
-    icon: <ScLinkedin size={20}/>,
+    icon: <ScLinkedin size={20} />,
     type: "linkedinLink",
-    tag: "a"
+    tag: "a",
   },
 ];
 
@@ -62,29 +62,20 @@ const UserProfile = props => {
       setWork(res.data);
     });
   }, [props.id,props.trigger]);
+
   return (
     <>
-      <Row>
-        <Col sm="6" md="3" xs="10" lg="3">
-          <ProfilePicture id={props.id} />
-        </Col>
+      <Row style={{minHeight: "20vh"}}>
         <Col sm="6" lg="5" className="middle_column">
           <h3>
             {(userData.fname ? userData.fname : "") +
               " " +
               (lname ? lname : " ")}
           </h3>
-          {userData.bio ? (
-            <ReactMarkdown source={userData.bio} />
-          ) : localStorage.getItem("id") === props.id ? (
-            <h6 style={{color: "gray"}}>
-              Your <i>About me</i> is empty
-            </h6>
-          ) : (
-            ""
-          )}
+        
         </Col>
-        <Col sm="6" lg="4">
+        <Col sm="6" lg="3"></Col>
+        <Col sm="6" lg="4" style={{display: "flex"}}>
           <Card style={{ border: 0 }}>
             <CardBody
               style={{

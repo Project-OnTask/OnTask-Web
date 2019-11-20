@@ -6,6 +6,9 @@ import UserNotification from "./UserNotification";
 import SENDER from "../../utils/SENDER";
 import RequireAuth from "../../utils/HeadlessRequireAuth"
 import {Search} from 'styled-icons/material/Search'
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
 import {
   Badge,
   UncontrolledDropdown,
@@ -34,7 +37,7 @@ class DefaultHeader extends Component {
   }
 
   state = {
-    noOfNotis: 0,
+    noOfNotis: 1,
     groups: [],
     notifications: [],
     propic: "",
@@ -88,41 +91,15 @@ class DefaultHeader extends Component {
           full={{ src: logo, width: 50, height: 50, alt: "OnTask" }}
           href="/dashboard"
         />
-<InputGroup style={{width: "20%",marginLeft: "1%",}}>
-        <Input placeholder="Search.." />
-        <InputGroupAddon addonType="append">
-          <InputGroupText>
-            <Search size={20}/>
-          </InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
-
-        <Nav navbar style={{ height: "3vh" }}>
-          <UncontrolledDropdown
-            style={{
-              display: this.state.groups.length > 0 ? "block" : "none",
-              marginLeft: "10%",
-            }}
+   <Form
+            className="mr-auto"
+            style={{ width: "30vw", display: "flex", flexDirection: "row" }}
           >
-            <DropdownToggle caret nav direction="down">
-              Groups
-            </DropdownToggle>
-            <DropdownMenu left="true">
-              {this.state.groups.map(group => {
-                return (
-                  <DropdownItem key={group.groupId} style={{border: 0}}>
-                    <a
-                      href={"/groups/" + group.groupId}
-                      style={{ textDecoration: "none", color: "black" }}
-                    >
-                      {group.name}
-                    </a>
-                  </DropdownItem>
-                );
-              })}
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </Nav>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-success">Search</Button>
+          </Form>
+
+
         <Nav className="ml-auto" navbar style={{  }}>
           <NewGroupForm />
           <NavItem>
@@ -133,7 +110,7 @@ class DefaultHeader extends Component {
                   {this.state.noOfNotis}
                 </Badge>
               </DropdownToggle>
-              <DropdownMenu>
+              <DropdownMenu right>
                 {this.state.notifications.length > 0 ? this.state.notifications.map(notification => {
                   return (
                     <UserNotification
@@ -144,7 +121,7 @@ class DefaultHeader extends Component {
                       createdAt={notification.createdAt || notification.activity.createdAt}
                     />
                   );
-                }) : <div style={{display: "flex",alignItems: "center",justifyContent: "center",height: "15vh",padding: "6%"}}>No New Notifications</div>}
+                }) : <div style={{display: "flex",alignItems: "center",justifyContent: "center",height: "15vh",width: "20vw",padding: "6%"}}>No New Notifications</div>}
               </DropdownMenu>
             </UncontrolledDropdown>
           </NavItem>
@@ -179,6 +156,15 @@ class DefaultHeader extends Component {
                   style={{ textDecoration: "none", color: "black" }}
                 >
                   Profile
+                </Link>{" "}
+              </DropdownItem>
+              <DropdownItem style={{border: "none"}}>
+                <i className="fa fa-cog" />
+                <Link
+                  to={"/settings"}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  Settings
                 </Link>{" "}
               </DropdownItem>
               <DropdownItem style={{border: "none"}} onClick={e => this.props.onLogout(e)}>

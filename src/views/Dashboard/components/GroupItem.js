@@ -10,7 +10,7 @@ const GroupItem = props => {
     <>
       <Link to={"/groups/" + props.groupId} style={{ textDecoration: "none" }}>
         <div style={{ paddingBottom: "3%", textDecoration: "none" }}>
-          <h5 style={{ textDecoration: "none", color: "black", padding: 0 }}>
+          <h5 style={{ textDecoration: "none", color: "black", padding: 0,paddingTop: "3%",paddingBottom: "2%" }}>
             {props.groupName}
           </h5>
           <span style={{ color: "gray" }}>

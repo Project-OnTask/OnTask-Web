@@ -11,7 +11,8 @@ const formStyle = {
   width: "100%",
   backgroundColor: "white",
   borderRadius: "10px",
-  paddingBottom: "30%"
+  paddingBottom: "25%",
+  paddingTop: "8%"
 };
 
 class EmailLogin extends Component {
@@ -84,7 +85,7 @@ class EmailLogin extends Component {
             {this.state.loginError}
           </p>
           {/* Email address */}
-          <Form.Group>
+          <Form.Group style={{marginTop: "10%"}}>
             <label>Email Address</label>
             <Form.Control
               type="email"
@@ -97,7 +98,7 @@ class EmailLogin extends Component {
           </Form.Group>
 
 {/* Password */}
-          <Form.Group>
+          <Form.Group style={{marginTop: "10%"}}>
             <label>
               Password <Link to="/forgot-password">Forgot password?</Link>
             </label>
@@ -111,7 +112,7 @@ class EmailLogin extends Component {
             </Form.Text>
           </Form.Group>
 
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: "flex", marginTop: "8%",justifyContent: "center" }}>
             <Button
               variant="success"
               style={{ width: "100%" }}

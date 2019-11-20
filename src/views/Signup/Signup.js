@@ -15,14 +15,6 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
   },
-  mobileSignupBox: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "orange",
-    borderRadius: "10px",
-    margin: "10px",
-  },
   background: {
     // background: "linear-gradient(180deg, #1117e1 50%, #FFFFFF 50%)",
     backgroundColor: "#1FDC75",
@@ -30,7 +22,7 @@ const styles = {
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",
-  minHeight: "100vh" 
+    minHeight: "100vh" 
   },
 };
 
@@ -86,7 +78,7 @@ class Signup extends Component {
           email={this.state.userEmail}
         />: 
                           <EmailSignup onSuccessfulSignup={this.setSuccess}/>}
-                  <h6 style={{marginTop: "1%",textAlign: "center"}}>Have an account? <Link to="/login">Login</Link></h6>  
+                  <h6 style={{textAlign: "center"}}>Have an account? <Link to="/login">Login</Link></h6>  
       </div>
     );
   }

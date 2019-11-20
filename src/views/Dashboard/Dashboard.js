@@ -85,7 +85,7 @@ class Dashboard extends Component {
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="12" lg="3" style={{ marginTop: "0.5%" }}>
-            <h6 style={{  }}>My Tasks</h6>
+            <h4 style={{  }}>My Tasks</h4>
             {this.state.assignedTasks.length > 0 ? (
               this.state.assignedTasks.map(item => {
                 return (
@@ -132,7 +132,7 @@ class Dashboard extends Component {
             <div
               className="bg-success"
               style={{
-                paddingTop: "6%",
+                paddingTop: "2%",
                 paddingBottom: "0.5%",
                 marginBottom: "1%",
               }}
@@ -188,7 +188,7 @@ class Dashboard extends Component {
                 alignItems: "center",
               }}
             >
-              <h6>My Groups</h6>
+              <h4>My Groups</h4>
               <div style={{ flexGrow: 1 }} />
               <Input
                 style={{ width: "50%" }}
@@ -224,7 +224,7 @@ class Dashboard extends Component {
                       textAlign: "center",
                     }}
                   >
-                    No groups
+                    No groups yet
                   </p>
                 </CardBody>
               </Card>

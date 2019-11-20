@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import moment from "moment";
 
 const styles = {
-  container: {display: "flex",flexDirection: "row"},
+  container: {display: "flex",flexDirection: "row",minHeight: "5vh"},
   imgContainer: {marginRight: "1%"},
   author: {margin: 0}
 }
@@ -39,7 +39,7 @@ const Comment = props => {
         )}
             </div>
             <div>
-            <p style={styles.author}><b>{props.fname}</b> &#xB7; <span style={{color: "gray"}}>{fromNow}</span></p>
+            <p style={styles.author}>{props.fname} &#xB7; <span style={{color: "gray"}}>{fromNow}</span></p>
             <div>
             <ReactMarkdown source={props.content} />
             

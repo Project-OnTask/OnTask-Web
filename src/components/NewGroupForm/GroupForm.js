@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -43,15 +41,6 @@ const GroupForm = props => {
       setSearchResults([]);
     }
   };
-
-  function addMember(data) {
-    const newSR = searchResults.filter(function(value, index, arr) {
-      return value !== data;
-    });
-    setSearchResults(newSR);
-    groupMembers.push(data);
-    setTrig(!trig);
-  }
 
   function createNewGroup(e) {
     e.preventDefault();

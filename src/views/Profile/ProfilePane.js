@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import { Card, CardBody } from "reactstrap";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import BasicInfoSettings from "./EditProfile/BasicInfoSettings";
-import WebPresenceSettings from "./EditProfile/WebPresenceSettings";
-import ContactInfoSettings from "./EditProfile/ContactInfoSettings";
-import WorkSettings from "./EditProfile/WorkSettings";
-import EducationSettings from "./EditProfile/EducationSettings";
 import PropTypes from "prop-types";
 import UserProfile from "./UserProfile";
 
@@ -69,47 +64,7 @@ class ProfilePane extends Component {
               title={this.state.editEnabled ? "Edit profile & settings" : ""}
               style={{ display: this.state.editEnabled ? "block" : "none" }}
             >
-              <Card>
-                <CardBody>
-                  <BasicInfoSettings
-                    id={localStorage.getItem("id")}
-                    onUpdate={this.triggerUpdate}
-                  />
-                </CardBody>
-              </Card>
-
-              <Card>
-                <CardBody>
-                  <ContactInfoSettings onUpdate={this.triggerUpdate} />
-                </CardBody>
-              </Card>
-
-              <Card>
-                <CardBody>
-                  <WebPresenceSettings
-                    id={localStorage.getItem("id")}
-                    onUpdate={this.triggerUpdate}
-                  />
-                </CardBody>
-              </Card>
-
-              <Card>
-                <CardBody>
-                  <WorkSettings
-                    id={localStorage.getItem("id")}
-                    onUpdate={this.triggerUpdate}
-                  />
-                </CardBody>
-              </Card>
-
-              <Card>
-                <CardBody>
-                  <EducationSettings
-                    id={localStorage.getItem("id")}
-                    onUpdate={this.triggerUpdate}
-                  />
-                </CardBody>
-              </Card>
+             
             </Tab>
           </Tabs>
         </CardBody>
