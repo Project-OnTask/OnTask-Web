@@ -8,26 +8,21 @@ import {
   Row,
 } from "reactstrap";
 
-import pusher from "../../utils/PusherObject";
+
 import GroupTasks from "./components/GroupTasks";
-import GroupActivityItem from "../../components/ActivityItem";
 import RequireAuth from "../../utils/PrivateRoute";
 import ReactMarkdown from "react-markdown";
 import GroupHeader from "./components/GroupHeader";
 import SENDER from "../../utils/SENDER";
 import GroupMembers from "./components/GroupMembers";
 import NewNoticeForm from "./components/NewNoticeForm"
+import GroupActivityModal from "./components/GroupActivityModal"
 import NoticeViewer from "../../components/NoticeViewer/NoticeViewer";
 
 class Group extends Component {
   constructor(props) {
     super(props);
     this.groupDesc = React.createRef();
-
-    // Subscribe to the relevant Pusher channel and listening for "new_activity" event.
-    // Whenever this event occurs in the channel, group activity feed is gonna be updated
-    var channel = pusher.subscribe("group_" + this.props.match.params.gid);
-    channel.bind("new_activity", this.updateGroupActivityFeed);
   }
 
   state = {
@@ -47,13 +42,6 @@ class Group extends Component {
     desEditable: false,
   };
 
-  // This invokes when the Pusher channel gets a "new_activity" event
-  updateGroupActivityFeed = data => {
-    this.setState(prevState => ({
-      groupActivities: [...prevState.groupActivities, JSON.parse(data)],
-    }));
-  };
-
   handleDescriptionChange = () => {
     this.setState({ desEditable: false });
     SENDER.post("/groups/" + this.props.match.params.gid + "/edit-desc", null, {
@@ -67,16 +55,19 @@ class Group extends Component {
   };
 
   componentDidMount() {
+    //When page is loading, check if there's a group for given id.
+    //If not, redirect to the dashboard
     SENDER.get("/exists/group/" + this.props.match.params.gid).then(res => {
-      if (res.status > 400) {
-        this.props.history.push("/");
-      }
+      
+    }).catch(err => {
+      this.props.history.push('/')
     });
+
     //Check for invitation token in the URL parameters
     const params = new URLSearchParams(this.props.location.search);
     const itoken = params.get("itoken");
 
-    // If token is present, member is added to the group
+    // If token is present, member currently logged in is added to the group
     if (itoken) {
       SENDER.post("/member/" + itoken, null, {
         params: {
@@ -89,7 +80,8 @@ class Group extends Component {
         })
         .catch(err => console.log(err));
     }
-
+    
+    //Get group name & description
     SENDER.get("/groups/" + this.props.match.params.gid)
       .then(res => {
         this.setState({
@@ -99,12 +91,15 @@ class Group extends Component {
       })
       .catch(err => console.log(err));
 
+    //Fetching group activity
     SENDER.get("/groups/" + this.props.match.params.gid + "/activity")
       .then(res => {
         this.setState({ groupActivities: res.data });
       })
       .catch(err => console.log(err));
 
+    //Check if currently logged in user is an admin of the group. Certain features
+    //are enabled only if the user is an admin.
     SENDER.get(
       "/member/" +
         this.props.match.params.gid +
@@ -116,6 +111,7 @@ class Group extends Component {
       })
       .catch(err => console.log(err));
 
+    //Fetching group announcements
     SENDER.get("/notices/group/" + this.props.match.params.gid)
       .then(res => {
         this.setState({ notices: res.data });
@@ -151,7 +147,7 @@ class Group extends Component {
         />
         <Row>
           {/* Task list of the group */}
-          <Col xs="12" sm="12" lg="3" style={{ marginTop: "0.5%" }}>
+          <Col xs="12" sm="12" lg="5" style={{ marginTop: "0.5%" }}>
             <GroupTasks
               groupId={this.props.match.params.gid}
               isAdmin={this.state.isAdmin}
@@ -159,39 +155,10 @@ class Group extends Component {
             />
           </Col>
 
-          {/* Group Activity Feed */}
-          <Col
-            xs="12"
-            sm="12"
-            lg="4"
-            style={{
-              width: "100%",
-              backgroundColor: "white",
-              marginTop: "0.5%",
-              paddingLeft: 0,
-            }}
-          >
-            <h5 style={{ margin: "1%" }}>Group Activity</h5>
-            <CardBody style={{ padding: 0 }}>
-              {this.state.groupActivities.length > 0 ? (
-                this.state.groupActivities.reverse().map(activity => (
-                  <GroupActivityItem
-                    description={activity.description
-                      .split("in group")[0]
-                      .trim()}
-                    key={activity.id}
-                    createdAt={activity.createdAt}
-                  />
-                ))
-              ) : (
-                <></>
-              )}
-            </CardBody>
-          </Col>
-
           {/* Group description, announcements. Only admins can edit group 
 description and post announcements */}
-          <Col xs="12" sm="6" lg="3" style={{ marginTop: "0.5%" }}>
+          <Col xs="12" sm="6" lg="4" style={{ marginTop: "0.5%" }}>
+            <GroupActivityModal groupId={this.props.match.params.gid}/>
             <Card
               style={{
                 padding: "1%",
@@ -310,7 +277,7 @@ description and post announcements */}
           </Col>
 
           {/* Group members, admins */}
-          <Col xs="12" sm="6" lg="2" style={{ padding: 0 }}>
+          <Col xs="12" sm="6" lg="3" style={{ padding: 0 }}>
             <GroupMembers
               isAdmin={this.state.isAdmin}
               groupId={this.props.match.params.gid}
