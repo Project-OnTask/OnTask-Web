@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import SENDER from "../../utils/SENDER";
 import { Clock } from "styled-icons/feather/Clock";
 import { Github } from "styled-icons/boxicons-logos/Github";
-import ProfilePicture from "../../components/ProfilePicture";
 import { Link2 } from "styled-icons/feather/Link2";
 import { ScLinkedin } from "styled-icons/evil/ScLinkedin";
 import { Row, Col, Card, CardBody } from "reactstrap";
 import EducationItem from "./components/EducationItem";
 import WorkItem from "./components/WorkItem";
 import moment from 'moment'
-import ReactMarkdown from "react-markdown";
 
 const links = [
   {
@@ -25,7 +23,7 @@ const links = [
     type: "member_time",
   },
   {
-    icon: <Github size={20} />,
+    icon: <Github size={30} />,
     type: "githubLink",
     tag: "a",
   },
@@ -74,15 +72,12 @@ const UserProfile = props => {
           </h3>
         
         </Col>
-        <Col sm="6" lg="3"></Col>
-        <Col sm="6" lg="4" style={{display: "flex"}}>
+        <Col sm="6" lg="2"></Col>
+        <Col sm="6" lg="5" style={{display: "flex"}}>
           <Card style={{ border: 0 }}>
             <CardBody
               style={{
                 padding: 0,
-                //paddingRight: "3%",
-                paddingLeft: "3%",
-//                display: userData.email ? "flex" : "none",
                 flexDirection: "column",
               }}
             >
@@ -128,11 +123,12 @@ const UserProfile = props => {
               }}
             >
               <i
-                style={{ fontSize: 18,marginRight: "1%",color: "gray" }}
+                style={{ fontSize: 18,marginRight: "1%",color: "#2BD375" }}
                 className="fa fa-graduation-cap"
               ></i>
               <h4>Education</h4>
             </div>
+            <hr />
 
             {education.length > 0 ? (
               education.map(EduItem => (
@@ -153,6 +149,7 @@ const UserProfile = props => {
                   margin: "1%",
                   marginLeft: "0%",
                   padding: "5%",
+                  border: "none",
                   alignItems: "center",
                 }}
               >
@@ -173,11 +170,12 @@ const UserProfile = props => {
               }}
             >
               <i
-                style={{ fontSize: 18,marginRight: "1%",color: "gray" }}
+                style={{ fontSize: 18,marginRight: "1%",color: "#2BD375" }}
                 className="fa fa-briefcase"
               ></i>
               <h4>Work</h4>
             </div>
+            <hr />
 
             {work.length > 0 ? (
               work.map(WItem => (
@@ -199,6 +197,7 @@ const UserProfile = props => {
                   padding: "5%",
                   margin: "1%",
                   marginLeft: 0,
+                  border: "none",
                   alignItems: "center",
                 }}
               >

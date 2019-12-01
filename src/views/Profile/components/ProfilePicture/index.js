@@ -1,7 +1,7 @@
 import React,{ useState,useRef,useEffect} from 'react'
 import './styles.css'
 import { Camera } from "styled-icons/boxicons-solid/Camera";
-import SENDER from "../../utils/SENDER";
+import SENDER from "../../../../utils/SENDER";
 
 const ProfilePicture = props => {
     const uploader = useRef(null);

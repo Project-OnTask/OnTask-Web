@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import RequireAuth from "../../utils/PrivateRoute";
 import SENDER from "../../utils/SENDER";
-import ProfilePane from "./ProfilePane";
 import moment from 'moment'
-import ProfilePicture from "../../components/ProfilePicture";
+import ProfilePicture from "./components/ProfilePicture";
 import UserProfile from "./UserProfile";
 import { Clock } from "styled-icons/feather/Clock";
 import { Github } from "styled-icons/boxicons-logos/Github";
 import { Link2 } from "styled-icons/feather/Link2";
 import { ScLinkedin } from "styled-icons/evil/ScLinkedin";
 import ReactMarkdown from "react-markdown";
-import { Card, CardBody, Col, Row } from "reactstrap";
+import { Col, Row } from "reactstrap";
 
 const links = [
   {
@@ -85,7 +84,7 @@ class Profile extends Component {
         <Col
           xs="12"
           sm="12"
-          lg="3"
+          lg="2"
           style={{
             paddingRight: 0,
             display: "flex",
@@ -95,8 +94,6 @@ class Profile extends Component {
           <div>
           <ProfilePicture id={this.props.match.params.id} />
           <div style={{marginBottom: "2%"}}>
-           {this.state.userData.bio}
-          </div>
           {this.state.userData.bio ? (
             <ReactMarkdown source={this.state.userData.bio} />
           ) : localStorage.getItem("id") === this.props.match.params.id ? (
@@ -107,7 +104,9 @@ class Profile extends Component {
             ""
           )}
           </div>
+          </div>
         </Col>
+        <Col xs="12" sm="12" lg="1" style={{paddingRight: 0}}></Col>  
         <Col xs="12" sm="12" lg="7" style={{ paddingRight: 0 }}>
           <UserProfile id={this.props.match.params.id} />
           {/* <ProfilePane id={this.props.match.params.id}/> */}
