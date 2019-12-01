@@ -7,7 +7,7 @@ const styles = {
     imageContainer: {
         display: "flex",
         flexDirection: "row",
-        height: "5vh",
+        height: "3vh",
         alignItems: "center",
         marginLeft: "0%",
         marginRight: "2%",
@@ -29,7 +29,7 @@ const TaskResItem = props => {
       </div>
       <div>
         <h6 style={{margin: 0}}>
-          <b>{`${props.name.slice(0,30)}...`}</b>
+          <b>{props.name.length > 40 ? `${props.name.slice(0,40)}...` : props.name}</b>
         </h6>
         <p>
           added by <b>{props.addedBy}</b> on <b>{props.cdate}</b>

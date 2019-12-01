@@ -17,13 +17,19 @@ class ForgotPassword extends Component {
         <Col sm={12} md={6}>
           <Card className="form_container">
             <CardBody>
-              <h3 style={{marginTop: "-1%"}}>Settings</h3>
+              <h3 style={{marginTop: "-1%",marginBottom: "2%"}}>Settings</h3>
               <BasicInfoSettings
                 id={localStorage.getItem("id")}
               />
             </CardBody>
           </Card>
           
+          <Card className="form_container">
+            <CardBody>
+              <ContactInfoSettings  />
+            </CardBody>
+          </Card>
+
           <Card className="form_container">
             <CardBody>
               <WorkSettings
@@ -41,11 +47,6 @@ class ForgotPassword extends Component {
           </Card>
         </Col>
         <Col sm={12} md={6} style={{marginTop: "1%"}}>
-          <Card className="form_container">
-            <CardBody>
-              <ContactInfoSettings  />
-            </CardBody>
-          </Card>
 
           <Card className="form_container">
             <CardBody>

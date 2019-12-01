@@ -4,10 +4,19 @@ import Button from "react-bootstrap/Button";
 import useForm from "../../utils/useForm";
 import axios from "axios";
 
-const formStyle = {
-    padding: "10% 30% 18% 30%",
-    backgroundColor: "white",
+const containerStyle = {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "#1FDC75",
+    minHeight: "100vh"
   };
+
+const formStyle = {
+  padding: "5%",
+  width: "50%",
+  backgroundColor: "white",
+}
 
 const ResetPassword = props => {
     const {values,handleChange,handleSubmit} = useForm(resetPassword)
@@ -51,7 +60,7 @@ const ResetPassword = props => {
             }).then(
                 res => {
                     if(res.status === 200){
-                        alert("Password reset successfully")
+                      props.history.push('/login')
                     }
                 }
             ).catch(
@@ -66,7 +75,8 @@ const ResetPassword = props => {
     }
 
     return (
-        <Form onSubmit={handleSubmit} style={formStyle}>
+      <div style={containerStyle}>
+           <Form onSubmit={handleSubmit} style={formStyle}>
         <h4 style={{ textAlign: "center" }}>Reset Your Password</h4>
         <Form.Text style={{ textAlign: "center", color: "red" }}>
           
@@ -100,7 +110,9 @@ const ResetPassword = props => {
           </Button>
         </div>
       </Form>
-    )
+
+      </div>
+         )
 }
 
 export default ResetPassword

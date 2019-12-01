@@ -5,7 +5,7 @@ import moment from "moment";
 const styles = {
   container: {display: "flex",flexDirection: "row",minHeight: "5vh"},
   imgContainer: {marginRight: "1%"},
-  author: {margin: 0}
+  author: {margin: 0,marginBottom: "1%"}
 }
 
 const Comment = props => {

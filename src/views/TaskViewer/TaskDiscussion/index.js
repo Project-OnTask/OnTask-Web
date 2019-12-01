@@ -37,7 +37,7 @@ const TaskDiscussion = props => {
     <Card className="border-light">
       <div style={{display: "flex",flexDirection: "row",height: "3vh",alignItems: "center"}}>
       <i className="icon-speech" />
-        <b style={{marginLeft: "1%"}}>Discussion</b>
+        <b style={{marginLeft: "1%",marginBottom: "1%"}}>Discussion</b>
       </div>
       <CardBody style={{ padding: 0, overflowY: "auto", paddingTop: "1%" }}>
         <p style={{ textAlign: "center", color: "red",display: error ? "block" : "none" }}>{error}</p>
