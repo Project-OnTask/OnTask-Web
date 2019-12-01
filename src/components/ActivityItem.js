@@ -9,12 +9,13 @@ const GroupActivityItem = props => {
   return (
     <div
       style={{
-        margin: "1%",
-        padding: "2%",
-        paddingBottom: "6%",
-        borderRadius: "6px",
-        width: "100%",
-        backgroundColor: "#CBD1D2",
+        // margin: "1%",
+         paddingBottom: "2%",
+         paddingTop: "2%",
+        // paddingBottom: "6%",
+        // borderRadius: "6px",
+        // width: "100%",
+        // backgroundColor: "#CBD1D2",
       }}
     >
       <h6 style={{ margin: 0, fontSize: 14 }}>

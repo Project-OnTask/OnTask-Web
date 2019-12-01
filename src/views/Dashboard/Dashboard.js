@@ -6,6 +6,7 @@ import pusher from "../../utils/PusherObject";
 import SENDER from "../../utils/SENDER";
 import TaskViewer from "../TaskViewer";
 import { Card, CardBody, Col, Input, Row } from "reactstrap";
+import { messaging } from "../../init-fcm";
 import GroupItem from "./components/GroupItem";
 
 class Dashboard extends Component {
@@ -25,6 +26,19 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
+    messaging.requestPermission()
+    .then(async function() {
+const token = await messaging.getToken();
+console.log("token: "+token)
+localStorage.setItem("f_t",token)
+    })
+    .catch(function(err) {
+      console.log("Unable to get permission to notify.", err);
+    });
+  navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
+
+
+
     SENDER.get("/user/" + localStorage.getItem("id") + "/d-tasks")
       .then(res => {
         const AssignedTasks = res.data.map(t => (
@@ -54,7 +68,8 @@ class Dashboard extends Component {
         this.setState({ feedItems: res.data });
       })
       .catch(err => console.log(err));
-  }
+  
+    }
 
   toggle() {
     this.setState({
