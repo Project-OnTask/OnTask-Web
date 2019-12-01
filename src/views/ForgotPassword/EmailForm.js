@@ -35,16 +35,12 @@ class EmailForm extends Component {
         isSubmitting: false,
       });
     } else {
-      console.log({
-        email: this.state.email
-      });
+   
       axios
         .post("/auth/"+this.state.email+"/genToken")
         .then(res => {
           if(res.status === 200){
-            this.setState({
-              success: "We sent password reset link.",
-            });
+            this.props.onSuccess()
           }
         })
         .catch(err => {

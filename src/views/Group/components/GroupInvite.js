@@ -23,8 +23,6 @@ class GroupInviteModal extends React.Component {
       inviteLink: "",
       copySuccess: '',
       trig: true,
-      message:
-        "I'm working on this project on OnTask and I want to share it with you",
       searchResults: [],
     };
   }
@@ -122,7 +120,6 @@ sendInvitationToUsers = data => {
         "I'm working on this project on OnTask and I want to share it with you",
       searchResults: [],
     })
-    //this.setState({ show: false });
   }
 
   handleShow() {
@@ -197,7 +194,7 @@ sendInvitationToUsers = data => {
                     key={result.userId}
                     id={result.userId}
                     data={result}
-                    selectMember={this.sendInvitationToUsers}
+                    selectMember={result.appUser ? this.addMember :this.sendInvitationToUsers}
                     name={result.fname + " " + lname}
                   />
                 );
@@ -216,7 +213,7 @@ sendInvitationToUsers = data => {
             </div> */}
             
 
-            <h6 style={{marginTop: "3%"}}>Invite by link <span onClick={this.createInviteLink} style={{cursor: "pointer",color: "green"}}>Create link</span></h6>
+            {/* <h6 style={{marginTop: "3%"}}>Invite by link <span onClick={this.createInviteLink} style={{cursor: "pointer",color: "green"}}>Create link</span></h6>
             
     <div style={{display: "flex",flexDirection: "row"}}>
     <Input
@@ -230,7 +227,7 @@ sendInvitationToUsers = data => {
              <Clipboard style={{width: "30%"}} data-clipboard-text={this.state.inviteLink} onSuccess={this.onCopySuccess}>
         Copy Link
       </Clipboard>
-    </div>
+    </div> */}
           </Modal.Body>
         </Modal>
       </>
