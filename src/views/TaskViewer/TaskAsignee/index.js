@@ -43,6 +43,7 @@ const SubTasks = props => {
         }).then(res => {
           if(res.status === 200){
             alert(data.fname + " was assigned to task")
+            setTrig(!trig)
             setIsExpanded(false)
           }
         }).catch(err => console.log(err))

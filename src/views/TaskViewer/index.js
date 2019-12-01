@@ -30,6 +30,7 @@ import axios from 'axios'
 
 const TaskViewer = props => {
   const [show, setShow] = useState(false);
+  const [trigger, setTrigger] = useState(false);
   const [subtaskTotal, setSubtaskTotal] = useState(1);
   const [percentage, setPercentage] = useState(0);
   const [groupName, setGroupName] = useState("");
@@ -51,6 +52,9 @@ const TaskViewer = props => {
       .then(res => {
         setTask(res.data);
         setDescription(res.data.description);
+        if(res.data.completed){
+          setPercentage(100)
+        }
       })
       .catch(err => console.log(err));    
       
@@ -77,7 +81,7 @@ const TaskViewer = props => {
       }
     ).catch(err => console.log("Outlook Error: "+err))
     
-  }, [props.i, props.taskId,props.groupId]);
+  }, [props.i, props.taskId,props.groupId,trigger]);
 
   function deleteTask() {
     if (window.confirm("All task data will be permanently deleted.Continue?")) {
@@ -160,11 +164,10 @@ const TaskViewer = props => {
       "/tasks/completed/" + localStorage.getItem("id") + "/" + props.taskId
     )
       .then(res => {
-        console.log("com_st", res.status);
-        console.log("dt:", res.data);
         if (res.status === 200 || res.status === 201) {
           if (res.data) {
             getSubTaskStats(1, 1);
+            setTrigger(!trigger)
           } else {
             getSubTaskStats(0, 1);
           }
@@ -291,7 +294,7 @@ const TaskViewer = props => {
                       }}
                       onClick={toggleTaskCompletedStatus}
                     >
-                      {task.isCompleted
+                      {task.completed
                         ? "Mark as not completed"
                         : "Mark as completed"}
                     </h6>

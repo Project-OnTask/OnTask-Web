@@ -23,7 +23,15 @@ class NewTaskForm extends React.Component {
   }
 
   handleClose() {
-    this.setState({ show: false });
+    this.setState({
+      show: false,
+      name: "",
+      isSubmitting: false,
+      error: "",
+      description: "",
+      dueDate: "",
+      startDate: new Date().toJSON().slice(0, 10)
+    })
   }
 
   handleShow() {

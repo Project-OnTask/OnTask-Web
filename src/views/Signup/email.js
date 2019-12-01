@@ -24,6 +24,7 @@ class EmailSignup extends Component {
     CheckedError: false,
     Error: "",
     isSubmitting: false,
+    submitError: "",
     fname: "",
     email: "",
     password: "",
@@ -84,6 +85,12 @@ class EmailSignup extends Component {
     } else {
       //If neither of above errors occur
       const username = this.state.email.split("@")[0];
+      this.setState({
+        FirstNameError: "",
+        EmailError: "",
+        PasswordError: "",
+        CheckedError: "",
+      });
       axios
         .post("/auth/signup", {
           fname: this.state.fname,
@@ -95,6 +102,18 @@ class EmailSignup extends Component {
           this.props.onSuccessfulSignup(true, this.state.email);
         })
         .catch(err => {
+          if(err.response.status === 400){
+            this.setState({
+              isSubmitting: false,
+              submitError: "This email address already exists."
+            })
+          }
+          else if(err.response.status === 500){
+            this.setState({
+              isSubmitting: false,
+              submitError: "There was an error. Please try again."
+            })
+          }
           console.log(err);
         });
     }
@@ -107,7 +126,7 @@ class EmailSignup extends Component {
           <img src={Logo} height="100" width="100" alt="" />
           <h5>Sign up with Email</h5>
         </div>
-        <p style={{ textAlign: "center", color: "red" }}>{this.state.Error}</p>
+        <p style={{ textAlign: "center", color: "red" }}>{this.state.submitError}</p>
         <p style={{ textAlign: "center", color: "black" }}>
           If you have a smartphone, please sign up on mobile app
         </p>

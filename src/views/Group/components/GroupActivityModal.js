@@ -5,6 +5,7 @@ import GroupActivityItem from "../../../components/ActivityItem";
 import pusher from "../../../utils/PusherObject";
 
 export default function GroupActivityModal(props) {
+  const [i,setI] = useState(0)
   const [show, setShow] = useState(false);
   const [groupActivities, setActivities] = useState([]);
 
@@ -24,9 +25,13 @@ export default function GroupActivityModal(props) {
         setActivities(res.data);
       })
       .catch(err => console.log(err));
-  }, []);
+  },[i]);
+
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true)  
+   setI(i + 1);
+  };
 
   return (
     <>

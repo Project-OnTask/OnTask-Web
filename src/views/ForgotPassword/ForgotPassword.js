@@ -28,9 +28,30 @@ const styles = {
   },
 };
 
+const SuccessMsg = () => {
+  return (
+    <p>A password reset link was sent. Please check your inbox.</p>
+  )
+}
+
 class ForgotPassword extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      isSuccess: false
+    }
+  }
+
+  setSuccess = () => {
+    this.setState({isSuccess: true})
+  }
+
   componentDidMount() {
-    axios.get("/auth/user/me").then(res => {
+    axios.get("/auth/user/me",{
+      headers: {
+        'Authorization': 'Bearer '+localStorage.getItem('token')
+      }
+    }).then(res => {
       if (res.data.id > 0) {
         this.props.history.push("/");
       }
@@ -59,7 +80,7 @@ class ForgotPassword extends Component {
             className="p-3"
             style={{ paddingRight: 0 }}
           >
-            <EmailForm />
+            {this.state.isSuccess ? <SuccessMsg />:             <EmailForm onSuccess={this.setSuccess}/>}
             <h6 style={{ marginTop: "2%",textAlign: "center" }}>
               Have an account? <Link to="/login">Login</Link>
             </h6>
