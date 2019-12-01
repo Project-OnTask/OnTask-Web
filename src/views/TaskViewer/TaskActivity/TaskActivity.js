@@ -17,11 +17,9 @@ const TaskActivity = props => {
         var channel = pusher.subscribe("task_" + props.taskId);
         channel.bind("new_activity", updateTaskActivityFeed);
 
-        console.log("taskid ",props.taskId)
         SENDER.get('/tasks/'+props.taskId+"/activity").then(
           res => {
-            setTaskActivities(res.data)
-            console.log("tac:",res.data)
+            setTaskActivities(res.data.reverse())
           }
         ).catch(err => console.log(err))
       },[props.taskId]

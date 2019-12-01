@@ -16,31 +16,7 @@ const GroupForm = props => {
   const [trig, setTrig] = useState(true);
   const [isSubmitting, setSubmitStatus] = useState(false);
   const [Error, setError] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-
-  const handleMemberSearch = e => {
-    if (e.target.value) {
-      SENDER.get("/user/search/" + e.target.value)
-        .then(res => {
-          let result = res.data;
-
-          for (var i = 0, len = groupMembers.length; i < len; i++) {
-            for (var j = 0, len2 = result.length; j < len2; j++) {
-              if (groupMembers[i].userId === result[j].userId) {
-                result.splice(j, 1);
-                len2 = result.length;
-              }
-            }
-          }
-
-          console.log(result);
-          setSearchResults(result);
-        })
-        .catch(err => console.log(err));
-    } else {
-      setSearchResults([]);
-    }
-  };
+  const [isPrivate,setPrivacy] = useState(false)
 
   function createNewGroup(e) {
     e.preventDefault();
@@ -54,6 +30,7 @@ const GroupForm = props => {
         userId: localStorage.getItem("id"),
         name: values.name,
         description: values.description,
+        isPrivate: isPrivate,
         members: groupMembers.map(member => member.userId),
       })
         .then(res => {
@@ -76,6 +53,11 @@ const GroupForm = props => {
     if (event.key === "Enter" && event.shiftKey === false) {
       event.preventDefault();
     }
+  };
+
+  const handlePrivacy = e => {
+    e.stopPropagation();
+    setPrivacy(e.target.checked);
   };
 
   return (
@@ -111,6 +93,19 @@ const GroupForm = props => {
 
           
         </Form.Group>
+
+        <Form.Group style={{marginTop: "5%"}}>
+          <Form.Check
+            type="checkbox"
+            onChange={handlePrivacy}
+            label={
+              <p style={{ marginBottom: 0 }}>
+                This group is private
+              </p>
+            }
+          />
+        </Form.Group>
+
       </Form>
 
       <Modal.Footer>

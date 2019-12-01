@@ -33,7 +33,6 @@ const ContactInfoSettings = props => {
       .then(res => {
         setErrMsg("")
         setSuccessMsg("Contact info updated successfully.");
-        props.onUpdate();
       })
       .catch(err => {
         setSuccessMsg("")

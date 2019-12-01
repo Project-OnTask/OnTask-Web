@@ -17,7 +17,6 @@ const WebPresenceSettings = props => {
       values
     )
       .then(res => {
-        props.onUpdate()
         setErrMsg("")
         setSuccessMsg("Updated successfully.");
       })

@@ -14,7 +14,7 @@ class GroupMemberItem extends Component {
           addedById: localStorage.getItem('id'),
           groupId: this.props.groupId, 
           userId: this.props.userId
-      }).then(res => alert("abc")).catch(err => console.log(err))
+      }).then(res => {}).catch(err => console.log(err))
   };
 
   removeFromAdmin = () => {
@@ -31,7 +31,9 @@ class GroupMemberItem extends Component {
         delBy: localStorage.getItem('id')
       }
     }).then(
-      res => alert("abc")).catch(
+      res => {
+        window.location.reload()
+      }).catch(
         err => console.log(err)
       )
   }
@@ -107,7 +109,8 @@ class GroupMemberItem extends Component {
             </DropdownItem>
             <DropdownItem 
            style={{display:  this.props.userId == localStorage.getItem('id') || this.props.isAdmin? "block":"none" }}
-            onClick={() => this.removeFromGroup(this.props.userId)}>Remove from group</DropdownItem>
+            onClick={() => this.removeFromGroup(this.props.userId)}>{this.props.userId === Number(localStorage.getItem('id')) ? "Leave group": "Riemove from group"}</DropdownItem>
+
           </DropdownMenu>
         </UncontrolledDropdown>
       </ListGroupItem>
