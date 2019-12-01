@@ -127,6 +127,7 @@ const WorkSettings = () => {
           <Input
             type="submit"
             style={styles.submitBtn}
+            value="Submit"
           />
         </div>
       </Form>

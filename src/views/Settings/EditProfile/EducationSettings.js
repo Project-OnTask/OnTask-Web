@@ -128,7 +128,7 @@ const EducationSettings = () => {
           <p onClick={() => setFormVisible(false)} style={styles.cancelBtn}>
             Cancel
           </p>
-          <Input type="submit" style={styles.submitBtn} />
+          <Input type="submit" style={styles.submitBtn} value="Add" />
         </div>
       </Form>
     </>
