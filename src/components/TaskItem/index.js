@@ -15,7 +15,7 @@ const TaskItem = props => {
           style={{ cursor: "pointer" }}
           onClick={OnClick}
         >
-          <h5>{props.task.name}</h5>
+          <h5 style={{color: props.isCompleted ? "green" : ""}}>{props.task.name}</h5>
           <p style={{ margin: 0 }}>
             due <b>{props.task.dueDate}</b>
           </p>

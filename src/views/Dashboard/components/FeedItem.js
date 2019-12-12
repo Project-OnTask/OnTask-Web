@@ -18,7 +18,7 @@ const FeedItem = props => {
           paddingLeft: 0
         }}
       >
-        <h6 style={{ margin: 0, marginLeft: "0.5%" }}>
+        <h6 style={{ margin: 0}}>
           {htmlToReactParser.parse(props.description)}
         </h6>
       </div>

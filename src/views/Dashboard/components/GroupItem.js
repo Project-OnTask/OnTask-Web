@@ -9,8 +9,25 @@ const GroupItem = props => {
   return (
     <>
       <Link to={"/groups/" + props.groupId} style={{ textDecoration: "none" }}>
-        <div style={{ paddingBottom: "3%", textDecoration: "none" }}>
-          <h5 style={{ textDecoration: "none", color: "black", padding: 0,paddingTop: "3%",paddingBottom: "2%" }}>
+        <div
+          style={{
+            height: "14vh",
+            padding: "1%",
+            paddingBottom: "3%",
+            marginBottom: "5%",
+            textDecoration: "none",
+            borderRadius: "5px",
+            backgroundColor: "#92E08D"
+          }}
+        >
+          <h5
+            style={{
+              textDecoration: "none",
+              color: "white",
+              padding: 0,
+              paddingBottom: "2%"
+            }}
+          >
             {props.groupName}
           </h5>
           <span style={{ color: "gray" }}>

@@ -28,12 +28,16 @@ const TaskResItem = props => {
         {getFileTypeIcon(props.type)}
       </div>
       <div>
-        <h6 style={{margin: 0}}>
-          <b>{props.name.length > 40 ? `${props.name.slice(0,40)}...` : props.name}</b>
+        <h6 style={{margin: 0,color: "black"}}>
+          <b>{props.name.length > 40 ? `${props.name.slice(0,25)}...` : props.name}</b>
         </h6>
-        <p>
-          added by <b>{props.addedBy}</b> on <b>{props.cdate}</b>
-        </p>
+        <i className="fa fa-calendar" />{" "}
+                          <b>{props.cdate}</b>
+                          <i
+                            className="fa fa-user"
+                            style={{ marginLeft: "5%" }}
+                          />{" "}
+                          <b>{props.addedBy}</b>
       </div>
     </ListGroupItem>
   );

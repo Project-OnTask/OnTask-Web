@@ -30,7 +30,9 @@ const styles = {
 
 const SuccessMsg = () => {
   return (
-    <p>A password reset link was sent. Please check your inbox.</p>
+    <div style={{display: "flex",height: "90vh",alignItems: "center",justifyContent: "center"}}>
+      <p style={{textAlign: "center",color: "white",fontSize: "1.6em"}}>A password reset link was sent. Please check your inbox.</p>
+    </div>
   )
 }
 
